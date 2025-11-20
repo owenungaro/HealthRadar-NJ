@@ -37,7 +37,7 @@ app.set("views", path.join(__dirname, "views"));
 await connectDb();
 
 // seeds hospitals
-if (process.env.RUN_SEED === "true") {
+if (process.env.RUN_SEED === "true" || process.env.RUN_SEED === "TRUE") {
   await seedHospitals();
   console.log("Finished seeding");
 }
