@@ -1,4 +1,4 @@
-import connectDb, { getDb } from './mongoConnection.js';
+import connectDb, { getDb } from "./mongoConnection.js";
 
 const getCollectionFn = (collection) => {
   let _col = undefined;
@@ -13,10 +13,12 @@ const getCollectionFn = (collection) => {
   };
 };
 
-export const users = getCollectionFn('users');
+export const users = getCollectionFn("users");
+export const hospitals = getCollectionFn("hospitals");
 
 // we can add other feature part later
 
 export default {
-  users
+  users,
+  hospitals,
 };
