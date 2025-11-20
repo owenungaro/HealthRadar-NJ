@@ -39,6 +39,7 @@ await connectDb();
 // seeds hospitals
 if (process.env.RUN_SEED === "true") {
   await seedHospitals();
+  console.log("Finished seeding");
 }
 
 // sessions stored in Mongo
