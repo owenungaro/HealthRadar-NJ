@@ -1,9 +1,13 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import usersData from "../data/index.js";
+import { usersData } from "../data/index.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = Router();
+
+router.get("/signup", (req, res) => {
+  res.render("signup", {title: 'Sign Up'})
+})
 
 // signup part
 router.post("/signup", async (req, res) => {
