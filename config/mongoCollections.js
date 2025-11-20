@@ -21,4 +21,3 @@ export const hospitals = getCollectionFn("hospitals");
 export default {
   users,
   hospitals,
-};
