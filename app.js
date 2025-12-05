@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import connectDb from "./config/mongoConnection.js";
 import configRoutes from "./routes/index.js";
 import { seedHospitals } from "./seed/seed.js";
+const isProd = process.env.NODE_ENV === "production";
 
 console.log("URI:", process.env.MONGO_URI);
 console.log("DB:", process.env.MONGO_DB_NAME);
@@ -54,8 +55,10 @@ app.use(
       collectionName: "sessions",
     }),
     cookie: {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 2, // 2 hours
+      httpOnly: true,          // JS cannot read cookie
+      secure: isProd,          // only over HTTPS in prod
+      sameSite: 'lax',         // helps against CSRF
+      maxAge: 1000 * 60 * 60 * 2
     },
   })
 );

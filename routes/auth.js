@@ -5,14 +5,27 @@ import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
+// simple sanitizer to strip leading/trailing spaces
+// and neutralize characters that can be used in XSS payloads
+function sanitizeString(value) {
+  if (typeof value !== "string") return value;
+  return value
+    .trim()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 router.get("/signup", (req, res) => {
-  res.render("signup", {title: 'Sign Up'})
-})
+  res.render("signup", { title: "Sign Up" });
+});
 
 // signup part
 router.post("/signup", async (req, res) => {
   try {
-    const {
+    let {
       userName,
       firstName,
       lastName,
@@ -26,6 +39,7 @@ router.post("/signup", async (req, res) => {
       confirmPassword,
     } = req.body;
 
+    // basic required checks
     if (
       !userName ||
       !firstName ||
@@ -42,11 +56,21 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
+    // sanitize all string inputs before saving to DB
+    userName = sanitizeString(userName);
+    firstName = sanitizeString(firstName);
+    lastName = sanitizeString(lastName);
+    email = sanitizeString(email);
+    county = sanitizeString(county);
+    zipCode = sanitizeString(zipCode);
+    preferredLanguage = sanitizeString(preferredLanguage);
+    role = sanitizeString(role);
+
     const user = await usersData.createUser({
       userName,
       firstName,
       lastName,
-      dob,
+      dob, 
       role,
       email,
       county,
@@ -55,6 +79,7 @@ router.post("/signup", async (req, res) => {
       password,
     });
 
+    // session object uses sanitized data from DB
     req.session.user = {
       _id: user._id,
       userName: user.userName,
@@ -74,14 +99,17 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-//login part
+// login part
 router.post("/login", async (req, res) => {
   try {
-    const { identifier, password } = req.body;
+    let { identifier, password } = req.body;
 
     if (!identifier || !password) {
       return res.status(400).json({ error: "Missing credentials" });
     }
+
+    // trim + sanitize identifier to avoid weird injection strings
+    identifier = sanitizeString(identifier);
 
     const user = await usersData.findUserByEmailOrUsername(identifier);
     if (!user) {
@@ -93,16 +121,26 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    req.session.user = {
-      _id: user._id,
-      userName: user.userName,
-      email: user.email,
-      role: user.role,
-    };
+    // optional hardening: regenerate session ID on login
+    req.session.regenerate((err) => {
+      if (err) {
+        console.error(err);
+        return res
+          .status(500)
+          .json({ error: "Could not create secure session" });
+      }
 
-    res.json({
-      message: "Login successful",
-      user: req.session.user,
+      req.session.user = {
+        _id: user._id,
+        userName: user.userName,
+        email: user.email,
+        role: user.role,
+      };
+
+      res.json({
+        message: "Login successful",
+        user: req.session.user,
+      });
     });
   } catch (err) {
     console.error(err);
