@@ -1,12 +1,10 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import { usersData } from "../data/index.js";
-import { requireAuth } from "../middleware/authMiddleware.js";
+import { usersData } from "../data/index.js";  // Assuming you have user data functionality
 
 const router = Router();
 
-// simple sanitizer to strip leading/trailing spaces
-// and neutralize characters that can be used in XSS payloads
+// Utility to sanitize strings and prevent XSS
 function sanitizeString(value) {
   if (typeof value !== "string") return value;
   return value
@@ -18,37 +16,18 @@ function sanitizeString(value) {
     .replace(/'/g, "&#39;");
 }
 
+// Route for sign up 
 router.get("/signup", (req, res) => {
   res.render("signup", { title: "Sign Up" });
 });
 
-// signup part
+// Route for sign up 
 router.post("/signup", async (req, res) => {
   try {
-    let {
-      userName,
-      firstName,
-      lastName,
-      dob,
-      role,
-      email,
-      county,
-      zipCode,
-      preferredLanguage,
-      password,
-      confirmPassword,
-    } = req.body;
+    let { userName, firstName, lastName, email, password, confirmPassword } = req.body;
 
-    // basic required checks
-    if (
-      !userName ||
-      !firstName ||
-      !lastName ||
-      !dob ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
+    // Validations
+    if (!userName || !firstName || !lastName || !email || !password || !confirmPassword) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -56,50 +35,43 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
-    // sanitize all string inputs before saving to DB
+    // Sanitize inputs
     userName = sanitizeString(userName);
     firstName = sanitizeString(firstName);
     lastName = sanitizeString(lastName);
     email = sanitizeString(email);
-    county = sanitizeString(county);
-    zipCode = sanitizeString(zipCode);
-    preferredLanguage = sanitizeString(preferredLanguage);
-    role = sanitizeString(role);
 
+    const existingUser = await usersData.findUserByEmailOrUsername(email);
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
     const user = await usersData.createUser({
       userName,
       firstName,
       lastName,
-      dob, 
-      role,
       email,
-      county,
-      zipCode,
-      preferredLanguage,
-      password,
+      password: hashedPassword,
     });
 
-    // session object uses sanitized data from DB
+    // Create session for the user
     req.session.user = {
       _id: user._id,
       userName: user.userName,
       email: user.email,
-      role: user.role,
     };
 
-    res.status(201).json({
-      message: "Signup successful",
-      user: req.session.user,
-    });
+    res.redirect("/dashboard"); // Redirect to the dashboard after successful signup
   } catch (err) {
     console.error(err);
-    res.status(400).json({
-      error: err.message || "Signup failed",
-    });
+    res.status(500).json({ error: "Signup failed" });
   }
 });
 
-// login part
+// Route for login (POST)
 router.post("/login", async (req, res) => {
   try {
     let { identifier, password } = req.body;
@@ -108,66 +80,51 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Missing credentials" });
     }
 
-    // trim + sanitize identifier to avoid weird injection strings
+    // Sanitize identifier
     identifier = sanitizeString(identifier);
 
+    // Find user by email or username
     const user = await usersData.findUserByEmailOrUsername(identifier);
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    // Check password
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // optional hardening: regenerate session ID on login
+    // Create session for the user
     req.session.regenerate((err) => {
       if (err) {
         console.error(err);
-        return res
-          .status(500)
-          .json({ error: "Could not create secure session" });
+        return res.status(500).json({ error: "Could not create secure session" });
       }
 
       req.session.user = {
         _id: user._id,
         userName: user.userName,
         email: user.email,
-        role: user.role,
       };
 
-      res.json({
-        message: "Login successful",
-        user: req.session.user,
-      });
+      // Redirect to dashboard after successful login
+      res.redirect("/dashboard");
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      error: "Login failed",
-    });
+    res.status(500).json({ error: "Login failed" });
   }
 });
 
-// logout part
+// Logout Route 
 router.post("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.json({ message: "Logged out" });
-  });
-});
-
-router.get("/me", (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: "Not authenticated" });
-  }
-  res.json({ user: req.session.user });
-});
-
-router.get("/protected", requireAuth, (req, res) => {
-  res.json({
-    message: "You are authenticated",
-    user: req.session.user,
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during session destruction", err);
+      return res.status(500).json({ error: "Failed to log out" });
+    }
+    res.redirect("/");  // Redirect to home page after successful logout
   });
 });
 

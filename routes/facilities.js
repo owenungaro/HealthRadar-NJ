@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { facilitiesData } from "../data/index.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
 // List facilities with filters
-router.get("/", async (req, res) => {
+router.get("/", requireAuth, async (req, res) => {
   try {
     const { county, city, facilityType, isActive } = req.query;
 
@@ -15,6 +16,7 @@ router.get("/", async (req, res) => {
       isActive,
     });
 
+    // Pass the user data to the view
     res.render("facilities/list", {
       title: "Facilities - HealthRadar NJ",
       facilities,
@@ -24,6 +26,7 @@ router.get("/", async (req, res) => {
         facilityType: facilityType || "",
         isActive: isActive || "",
       },
+      user: req.session.user || null, 
     });
   } catch (err) {
     console.error(err);
@@ -35,19 +38,18 @@ router.get("/", async (req, res) => {
 });
 
 // Facility detail page
-
-router.get("/:id", async (req, res) => {
+router.get("/:id", requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const facility = await facilitiesData.getFacilityById(id);
 
-    // TODO: later fetch reviews for this facility
-    // const reviews = await reviewsData.getReviewsByFacility(id);
+    // Fetch user session to pass to the view
+    const user = req.session.user || null;
 
     res.render("facilities/detail", {
       title: facility.licensedFacilityName,
       facility,
-      // reviews,
+      user, 
     });
   } catch (err) {
     console.error(err);
