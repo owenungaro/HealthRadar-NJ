@@ -1,0 +1,51 @@
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#0ea5e9" opacity="0.1"/>
+  
+  <!-- Radar circles -->
+  <circle cx="100" cy="100" r="70" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.3"/>
+  <circle cx="100" cy="100" r="50" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
+  <circle cx="100" cy="100" r="30" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Center dot -->
+  <circle cx="100" cy="100" r="6" fill="#0ea5e9"/>
+  
+  <!-- Radar sweep line -->
+  <line x1="100" y1="100" x2="100" y2="30" stroke="#10b981" stroke-width="3" stroke-linecap="round">
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0 100 100"
+      to="360 100 100"
+      dur="3s"
+      repeatCount="indefinite"/>
+  </line>
+  
+  <!-- Health cross -->
+  <g transform="translate(100, 100)">
+    <!-- Vertical bar -->
+    <rect x="-4" y="-16" width="8" height="32" fill="#10b981" rx="2"/>
+    <!-- Horizontal bar -->
+    <rect x="-16" y="-4" width="32" height="8" fill="#10b981" rx="2"/>
+  </g>
+  
+  <!-- Pulse dots (health indicators) -->
+  <circle cx="145" cy="75" r="4" fill="#10b981">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="55" cy="75" r="4" fill="#10b981">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="125" cy="125" r="4" fill="#10b981">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Text -->
+  <text x="220" y="95" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#1e293b">
+    Health
+  </text>
+  <text x="220" y="135" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#0ea5e9">
+    Radar
+  </text>
+</svg>

@@ -1,14 +1,24 @@
-<h2>{{facility.licensedFacilityName}}</h2>
+<div class="facilities-header">
+  <h2>{{facility.licensedFacilityName}}</h2>
+
+  {{#if user}}
+    <div class="facilities-actions">
+      <a href="/dashboard" class="dashboard-link">Back to Dashboard</a>
+
+      <form action="/auth/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+    </div>
+  {{/if}}
+</div>
 
 <p><strong>Type:</strong> {{facility.facilityType}}</p>
 <p><strong>Address:</strong> {{facility.address}}, {{facility.city}}, {{facility.state}} {{facility.zipCode}}</p>
 <p><strong>County:</strong> {{facility.county}}</p>
 <p><strong>Phone:</strong> {{facility.telephone}}</p>
-<p><strong>Email:</strong> {{facility.email}}</p>
+<p><strong>Email:</strong> <a href="mailto:{{facility.email}}">{{facility.email}}</a></p>
 
-<p>
-  <strong>License Expires:</strong> {{facility.licenseExpires}}
-</p>
+<p><strong>License Expires:</strong> {{facility.licenseExpires}}</p>
 <p>
   <strong>License Status:</strong>
   {{#if facility.isActive}}
@@ -23,7 +33,7 @@
 <p><strong>Admin:</strong> {{facility.adminName}} ({{facility.adminUsername}})</p>
 
 <p>
-  <strong>Average Rating:</strong> {{facility.averageRating}}
+  <strong>Average Rating:</strong> {{facility.averageRating}} 
   ({{facility.totalReviews}} reviews)
 </p>
 
@@ -31,6 +41,5 @@
 
 <h3>Reviews</h3>
 <p>Reviews feature coming soon.</p>
-{{!-- later: loop reviews here --}}
 
 <p><a href="/facilities">← Back to facility list</a></p>

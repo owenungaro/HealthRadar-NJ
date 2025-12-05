@@ -1,25 +1,47 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form method="POST" action="/auth/login">
-      <label>Username</label>
-      <input type="text" name="identifier" required />
-      <br>
-      <label>Password</label>
-      <input type="password" name="password" required />
-      <br>
-      <button type="submit">Login</button>
-    </form>
-  <br>
-  <form method="GET" action="/auth/signup">
-      <button type="submit">Sign Up</button>
-  </form>
-  </body>
-</html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthRadar NJ</title>
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="icon" href="/public/images/healthradar_logo.svg" type="image/svg">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
+  </div>
 
+  <div class="login-bg">
+    <div class="login-container">
+      {{#if user}}
+        <h2>Welcome, {{user.userName}}!</h2>
+        <div class="dashboard-links">
+          <a href="/facilities">Explore Facilities</a>
+          <a href="/reviews">See Reviews</a>
+          <a href="/user-profile">User Profile</a>
+          <a href="/analytics">Analytics Dashboard</a>
+          <a href="/emergency">Find Emergency Centers</a>
+          <form action="/auth/logout" method="POST">
+            <button type="submit">Logout</button>
+          </form>
+        </div>
+      {{else}}
+        <form action="/auth/login" method="POST" class="login-form">
+          <h2>Sign In</h2>
+          <input type="text" name="identifier" placeholder="Username or Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <button type="submit">Sign In</button>
+        </form>
+        <div class="extra-links">
+          <a href="/auth/signup">Sign up here</a>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 HealthRadar NJ. All rights reserved.</p>
+  </footer>
+</body>
+</html>

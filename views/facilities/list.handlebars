@@ -1,5 +1,16 @@
-<h2>Facilities</h2>
+<div class="facilities-header">
+  <h2>Facilities</h2>
 
+  {{#if user}}
+    <div class="facilities-actions">
+      <a href="/dashboard" class="dashboard-link">Back to Dashboard</a>
+
+      <form action="/auth/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+    </div>
+  {{/if}}
+</div>
 
 <form method="GET" action="/facilities" class="facility-filters">
   <label>
@@ -14,12 +25,13 @@
     Type:
     <input type="text" name="facilityType" value="{{filters.facilityType}}" />
   </label>
+  
   <button type="submit">Filter</button>
+  
   <button type="button" onclick="window.location.href='/facilities'">
-    Reset
+    Reset Filters
   </button>
 </form>
-
 
 {{#if facilities.length}}
   <ul class="facility-list">
@@ -30,8 +42,13 @@
         </h3>
         <p>{{this.facilityType}}</p>
         <p>{{this.address}}, {{this.city}}, {{this.county}} County</p>
-        <p>License status:
-          {{#if this.isActive}}<span class="status-active">Active</span>{{else}}<span class="status-inactive">Inactive</span>{{/if}}
+        <p>
+          License status:
+          {{#if this.isActive}}
+            <span class="status-active">Active</span>
+          {{else}}
+            <span class="status-inactive">Inactive</span>
+          {{/if}}
         </p>
         <p>Average rating: {{this.averageRating}} ({{this.totalReviews}} reviews)</p>
       </li>
