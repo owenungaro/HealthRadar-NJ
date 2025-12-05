@@ -1,0 +1,36 @@
+<h2>{{facility.licensedFacilityName}}</h2>
+
+<p><strong>Type:</strong> {{facility.facilityType}}</p>
+<p><strong>Address:</strong> {{facility.address}}, {{facility.city}}, {{facility.state}} {{facility.zipCode}}</p>
+<p><strong>County:</strong> {{facility.county}}</p>
+<p><strong>Phone:</strong> {{facility.telephone}}</p>
+<p><strong>Email:</strong> {{facility.email}}</p>
+
+<p>
+  <strong>License Expires:</strong> {{facility.licenseExpires}}
+</p>
+<p>
+  <strong>License Status:</strong>
+  {{#if facility.isActive}}
+    <span class="status-active">Active</span>
+  {{else}}
+    <span class="status-inactive">Inactive</span>
+  {{/if}}
+</p>
+
+<p><strong>Licensed Beds:</strong> {{facility.licensedBeds}}</p>
+<p><strong>Owner:</strong> {{facility.licensedOwner}}</p>
+<p><strong>Admin:</strong> {{facility.adminName}} ({{facility.adminUsername}})</p>
+
+<p>
+  <strong>Average Rating:</strong> {{facility.averageRating}}
+  ({{facility.totalReviews}} reviews)
+</p>
+
+<hr>
+
+<h3>Reviews</h3>
+<p>Reviews feature coming soon.</p>
+{{!-- later: loop reviews here --}}
+
+<p><a href="/facilities">← Back to facility list</a></p>

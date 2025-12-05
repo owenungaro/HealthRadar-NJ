@@ -1,0 +1,42 @@
+<h2>Facilities</h2>
+
+
+<form method="GET" action="/facilities" class="facility-filters">
+  <label>
+    County:
+    <input type="text" name="county" value="{{filters.county}}" />
+  </label>
+  <label>
+    City:
+    <input type="text" name="city" value="{{filters.city}}" />
+  </label>
+  <label>
+    Type:
+    <input type="text" name="facilityType" value="{{filters.facilityType}}" />
+  </label>
+  <button type="submit">Filter</button>
+  <button type="button" onclick="window.location.href='/facilities'">
+    Reset
+  </button>
+</form>
+
+
+{{#if facilities.length}}
+  <ul class="facility-list">
+    {{#each facilities}}
+      <li class="facility-card">
+        <h3>
+          <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
+        </h3>
+        <p>{{this.facilityType}}</p>
+        <p>{{this.address}}, {{this.city}}, {{this.county}} County</p>
+        <p>License status:
+          {{#if this.isActive}}<span class="status-active">Active</span>{{else}}<span class="status-inactive">Inactive</span>{{/if}}
+        </p>
+        <p>Average rating: {{this.averageRating}} ({{this.totalReviews}} reviews)</p>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No facilities found with these filters.</p>
+{{/if}}
