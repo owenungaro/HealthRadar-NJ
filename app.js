@@ -63,6 +63,12 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.render('main', {
+    title: 'HealthRadar NJ'
+  });
+});
+
 // configure routes
 configRoutes(app);
 

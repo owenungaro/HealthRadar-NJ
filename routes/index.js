@@ -1,8 +1,10 @@
 
 import authRoutes from './auth.js';
+import facilitiesRoutes from "./facilities.js";
 
 const constructorMethod = (app) => {
   app.use('/auth', authRoutes);
+  app.use("/facilities", facilitiesRoutes);
 
   app.get('/', (req, res) => {
     res.render('home', {
