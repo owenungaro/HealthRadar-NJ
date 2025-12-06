@@ -43,10 +43,10 @@ export async function getFacilities(filters = {}) {
   }
 
   if (filters.facilityType) {
-    query.facilityType = sanitizeString(filters.facilityType).toUpperCase();
+    query.facilityType = new RegExp(sanitizeString(filters.facilityType), "i"); // partial match, case-insensitive
   }
 
-  if (filters.isActive !== undefined) {
+  if (filters.isActive !== undefined && filters.isActive !== "") {
     query.isActive = filters.isActive === "true" || filters.isActive === true;
   }
 
