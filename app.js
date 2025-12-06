@@ -13,6 +13,7 @@ import configRoutes from "./routes/index.js";
 import { seedHospitals } from "./seed/seed.js";
 import { requireAuth } from "./middleware/authMiddleware.js";
 
+
 const isProd = process.env.NODE_ENV === "production";
 
 console.log("URI:", process.env.MONGO_URI);
