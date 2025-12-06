@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }
 
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
@@ -14,6 +15,9 @@ body {
   background-size: cover;  /* Ensures the image covers the whole page */
   position: relative;
   color: #333;
+  margin-left: 5px;
+  margin-right: 5px
+  
 }
 
 body::before {
@@ -194,7 +198,7 @@ h2 {
 }
 
 /* Logout Button Styling */
-.logout-button {
+.logout-button,.back-to-dashboard-button {
   padding: 16px;
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: white;
@@ -207,42 +211,22 @@ h2 {
   box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
 }
 
-.logout-button:hover {
-  transform: translateY(-2px);
+.logout-button:hover,.back-to-dashboard-button  {
+  transform: translateY(-9px);
   box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
 }
 
 /* Footer Styling */
 footer {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
   color: white;
   text-align: center;
   padding: 20px;
   font-size: 14px;
-  margin-top: auto;
+  margin-top: 500px;
+  
 }
 
-/* Dashboard Header */
-.dashboard-header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 30px 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  z-index: 10;
-  margin-top: 80px;
-}
 
-.dashboard-header h1 {
-  color: #2d3748;
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0;
-}
 
 .logout-form {
   margin: 0;
@@ -327,60 +311,27 @@ footer {
   margin: 0;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-    padding: 20px;
-    margin-top: 70px;
-  }
-
-  .dashboard-header h1 {
-    font-size: 22px;
-  }
-
-  .dashboard-container {
-    padding: 40px 20px;
-  }
-
-  .feature-buttons {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .login-container {
-    padding: 40px 30px;
-  }
-
-  .logo {
-    width: 100px;
-  }
-
-  .logo-container {
-    top: 15px;
-    right: 20px;
-  }
-
-  h2 {
-    font-size: 26px;
-  }
-}
-
-/* Facilities Header */
-.facilities-header {
-  background: rgba(255, 255, 255, 0.9);
+/* Dashboard Header */
+.dashboard-header,.facilities-header {
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 20px 40px;
+  padding: 30px 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+  margin-top: 80px;
 }
+
+.dashboard-header h1 {
+  color: #2d3748;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
 
 .dashboard-link {
   color: #667eea;
@@ -410,3 +361,68 @@ footer {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
 }
+
+/* Facilities Cards */
+.facility-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.facility-filters {
+  margin-top: 30px; 
+  margin-bottom: 30px; 
+}
+
+.facility-card {
+  margin-bottom: 20px; }
+
+.facility-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.facility-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.facility-card p {
+  font-size: 14px;
+  color: #4a5568;
+  margin-bottom: 10px;
+}
+
+.facility-card a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.facility-card a:hover {
+  text-decoration: underline;
+}
+
+.status-active {
+  color: green;
+  font-weight: bold;
+}
+
+.status-inactive {
+  color: red;
+  font-weight: bold;
+}
+
+.facilities-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: middle;  /* Vertically center items */
+  gap: 12px;
+}
+

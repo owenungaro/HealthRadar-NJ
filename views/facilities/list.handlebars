@@ -1,9 +1,10 @@
-<div class="facilities-header">
-  <h2>Facilities</h2>
-
+<div class="dashboard-header">
+  <h1>Welcome to Facilities</h1>
   {{#if user}}
     <div class="facilities-actions">
-      <a href="/dashboard" class="dashboard-link">Back to Dashboard</a>
+      <a href="/dashboard" class="dashboard-link">
+        <button class="back-to-dashboard-button">Back to Dashboard</button>
+      </a>
 
       <form action="/auth/logout" method="POST" class="logout-form">
         <button type="submit" class="logout-button">Logout</button>
@@ -11,49 +12,67 @@
     </div>
   {{/if}}
 </div>
+<div class="logo-container">
+  <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
+</div>
 
-<form method="GET" action="/facilities" class="facility-filters">
+<!-- Filters Form -->
+<form id="facility-filters" class="facility-filters">
   <label>
     County:
-    <input type="text" name="county" value="{{filters.county}}" />
+    <input type="text" name="county" id="county" value="{{filters.county}}" />
   </label>
   <label>
     City:
-    <input type="text" name="city" value="{{filters.city}}" />
+    <input type="text" name="city" id="city" value="{{filters.city}}" />
   </label>
   <label>
     Type:
-    <input type="text" name="facilityType" value="{{filters.facilityType}}" />
+    <input type="text" name="facilityType" id="facilityType" value="{{filters.facilityType}}" />
   </label>
+  <label>
+  License Status:
+  <select name="isActive" id="isActive">
+    <option value="">All</option> <!-- When "All" is selected, it should be empty -->
+    <option value="true" {{#if filters.isActive}}{{#if (eq filters.isActive 'true')}} selected {{/if}}{{/if}}>Active</option>
+    <option value="false" {{#if filters.isActive}}{{#if (eq filters.isActive 'false')}} selected {{/if}}{{/if}}>Inactive</option>
+  </select>
+</label>
   
   <button type="submit">Filter</button>
   
-  <button type="button" onclick="window.location.href='/facilities'">
+  <button type="button" id="reset-filters">
     Reset Filters
   </button>
 </form>
 
-{{#if facilities.length}}
-  <ul class="facility-list">
-    {{#each facilities}}
-      <li class="facility-card">
-        <h3>
-          <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
-        </h3>
-        <p>{{this.facilityType}}</p>
-        <p>{{this.address}}, {{this.city}}, {{this.county}} County</p>
-        <p>
-          License status:
-          {{#if this.isActive}}
-            <span class="status-active">Active</span>
-          {{else}}
-            <span class="status-inactive">Inactive</span>
-          {{/if}}
-        </p>
-        <p>Average rating: {{this.averageRating}} ({{this.totalReviews}} reviews)</p>
-      </li>
-    {{/each}}
-  </ul>
-{{else}}
-  <p>No facilities found with these filters.</p>
-{{/if}}
+
+<div id="facility-list-container">
+  {{#if facilities.length}}
+    <div class="facility-list">
+      {{#each facilities}}
+        <div class="facility-card">
+          <h3 class="facility-name">
+            <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
+          </h3>
+          <p><strong>Type:</strong> {{this.facilityType}}</p>
+          <p><strong>Address:</strong> {{this.address}}, {{this.city}}, {{this.county}} County</p>
+          <p><strong>Phone:</strong> {{this.telephone}}</p>
+          <p><strong>Email:</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
+          <p><strong>License Status:</strong> 
+            {{#if this.isActive}} 
+              <span class="status-active">Active</span>
+            {{else}} 
+              <span class="status-inactive">Inactive</span>
+            {{/if}}
+          </p>
+          <p><strong>Average Rating:</strong> {{this.averageRating}} ({{this.totalReviews}} reviews)</p>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p>No facilities found with these filters.</p>
+  {{/if}}
+</div>
+
+<script src="/public/js/AJAXfilter.js"></script>

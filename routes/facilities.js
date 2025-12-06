@@ -13,10 +13,15 @@ router.get("/", requireAuth, async (req, res) => {
       county,
       city,
       facilityType,
-      isActive,
+      isActive: isActive !== "" ? isActive : undefined,
     });
 
-    // Pass the user data to the view
+    // if this is an AJAX request
+    if (req.headers['x-requested-with'] === 'XMLHttpRequest' || req.headers.accept.includes('application/json')) {
+      return res.json({ facilities });
+    }
+
+    // Otherwise, render the list page as usual
     res.render("facilities/list", {
       title: "Facilities - HealthRadar NJ",
       facilities,
@@ -26,7 +31,7 @@ router.get("/", requireAuth, async (req, res) => {
         facilityType: facilityType || "",
         isActive: isActive || "",
       },
-      user: req.session.user || null, 
+      user: req.session.user || null,
     });
   } catch (err) {
     console.error(err);
@@ -37,19 +42,19 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
-// Facility detail page
+
 router.get("/:id", requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const facility = await facilitiesData.getFacilityById(id);
 
-    // Fetch user session to pass to the view
+  
     const user = req.session.user || null;
 
     res.render("facilities/detail", {
       title: facility.licensedFacilityName,
       facility,
-      user, 
+      user,
     });
   } catch (err) {
     console.error(err);
