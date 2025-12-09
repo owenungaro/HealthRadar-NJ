@@ -1,6 +1,6 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import { usersData } from "../data/index.js";  // Assuming you have user data functionality
+import { usersData } from "../data/index.js"; // Assuming you have user data functionality
 
 const router = Router();
 
@@ -16,18 +16,42 @@ function sanitizeString(value) {
     .replace(/'/g, "&#39;");
 }
 
-// Route for sign up 
+// Route for sign up
 router.get("/signup", (req, res) => {
   res.render("signup", { title: "Sign Up" });
 });
 
-// Route for sign up 
+// Route for sign up
 router.post("/signup", async (req, res) => {
   try {
-    let { userName, firstName, lastName, email, password, confirmPassword } = req.body;
+    let {
+      userName,
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      county,
+      preferredLanguage,
+      zipCode,
+      role,
+      dob,
+    } = req.body;
 
     // Validations
-    if (!userName || !firstName || !lastName || !email || !password || !confirmPassword) {
+    if (
+      !userName ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !county ||
+      !preferredLanguage ||
+      !zipCode ||
+      !role ||
+      !dob
+    ) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -40,6 +64,11 @@ router.post("/signup", async (req, res) => {
     firstName = sanitizeString(firstName);
     lastName = sanitizeString(lastName);
     email = sanitizeString(email);
+    county = sanitizeString(county);
+    zipCode = sanitizeString(zipCode);
+    preferredLanguage = sanitizeString(preferredLanguage);
+    role = sanitizeString(role);
+    dob = sanitizeString(dob);
 
     const existingUser = await usersData.findUserByEmailOrUsername(email);
     if (existingUser) {
@@ -54,6 +83,11 @@ router.post("/signup", async (req, res) => {
       firstName,
       lastName,
       email,
+      dob,
+      role,
+      county,
+      zipCode,
+      preferredLanguage,
       password: hashedPassword,
     });
 
@@ -99,7 +133,9 @@ router.post("/login", async (req, res) => {
     req.session.regenerate((err) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ error: "Could not create secure session" });
+        return res
+          .status(500)
+          .json({ error: "Could not create secure session" });
       }
 
       req.session.user = {
@@ -117,14 +153,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Logout Route 
+// Logout Route
 router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error("Error during session destruction", err);
       return res.status(500).json({ error: "Failed to log out" });
     }
-    res.redirect("/");  // Redirect to home page after successful logout
+    res.redirect("/"); // Redirect to home page after successful logout
   });
 });
 

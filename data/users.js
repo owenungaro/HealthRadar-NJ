@@ -4,22 +4,22 @@ import { ObjectId } from "mongodb";
 
 export async function createUser(userData) {
   if (!userData || typeof userData !== "object") {
-    throw new Error("Invalid user data");
+    throw "Invalid user data";
   }
 
   let isASCII = (s) => /^[\x00-\x7F]+$/.test(s);
 
   let checkStr = (v, name) => {
-    if (!v || typeof v !== "string") throw new Error(`Invalid ${name}`);
-    if (!isASCII(v)) throw new Error(`Invalid ${name}`);
+    if (!v || typeof v !== "string") throw `Invalid ${name}`;
+    if (!isASCII(v)) throw `Invalid ${name}`;
     let trimmed = v.trim();
-    if (!trimmed) throw new Error(`Invalid ${name}`);
+    if (!trimmed) throw `Invalid ${name}`;
     return trimmed;
   };
 
   let userName = checkStr(userData.userName, "username");
   if (userName.length < 4) {
-    throw new Error("Invalid username");
+    throw "Invalid username";
   }
 
   let firstName = checkStr(userData.firstName, "first name");
@@ -27,7 +27,7 @@ export async function createUser(userData) {
 
   let email = checkStr(userData.email, "email").toLowerCase();
   if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    throw new Error("Invalid email");
+    throw "Invalid email";
   }
 
   let password = checkStr(userData.password, "password");
@@ -39,17 +39,17 @@ export async function createUser(userData) {
     !/[!@#$%^&*()_\-+=<>?/[\]{}|~]/.test(password);
 
   if (pwFails) {
-    throw new Error("Invalid password");
+    throw "Invalid password";
   }
-
+  // console.log(userData);
+  // SHIT DONT WORK
   let dob = checkStr(userData.dob, "date of birth");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
-    throw new Error("Invalid date of birth");
+    throw "Invalid date of birth";
   }
-
   let parsed = new Date(dob);
   if (isNaN(parsed.getTime())) {
-    throw new Error("Invalid date of birth");
+    throw "Invalid date of birth";
   }
 
   let today = new Date();
@@ -58,9 +58,8 @@ export async function createUser(userData) {
     today.getMonth(),
     today.getDate()
   );
-
   if (parsed > isoToday) {
-    throw new Error("Invalid date of birth");
+    throw "Invalid date of birth";
   }
 
   let users = await usersCollection();
@@ -70,7 +69,7 @@ export async function createUser(userData) {
   });
 
   if (existing) {
-    throw new Error("User already exists");
+    throw "User already exists";
   }
 
   let passwordHash = await bcrypt.hash(password, 12);
@@ -97,11 +96,11 @@ export async function createUser(userData) {
 
 export async function findUserByEmailOrUsername(identifier) {
   if (!identifier || typeof identifier !== "string") {
-    throw new Error("Invalid identifier");
+    throw "Invalid identifier";
   }
   let trimmed = identifier.trim();
   if (!trimmed || trimmed === "" || !/^[\x00-\x7F]+$/.test(trimmed)) {
-    throw new Error("Invalid identifier");
+    throw "Invalid identifier";
   }
 
   let query = [];
@@ -111,13 +110,13 @@ export async function findUserByEmailOrUsername(identifier) {
     let validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!validEmail.test(email)) {
-      throw new Error("Invalid identifier");
+      throw "Invalid identifier";
     }
     query = { email };
   } else {
     //treat as username
     if (trimmed.length < 4) {
-      throw new Error("Invalid identifier");
+      throw "Invalid identifier";
     }
     query = { userName: trimmed };
   }
@@ -125,29 +124,29 @@ export async function findUserByEmailOrUsername(identifier) {
   let users = await usersCollection();
   let user = await users.findOne(query);
 
-  if (!user) {
-    throw new Error("User not found");
-  }
+  // if (!user) {
+  //   throw "User not found";
+  // }
   return user;
 }
 
 export async function findUserById(id) {
   if (!id || typeof id !== "string" || !ObjectId.isValid(id)) {
-    throw new Error("Invalid id");
+    throw "Invalid id";
   }
 
   let users = await usersCollection();
   let user = await users.findOne({ _id: new ObjectId(id) });
 
-  if (!user) {
-    throw new Error("User not found");
-  }
+  // if (!user) {
+  //   throw "User not found";
+  // }
   return user;
 }
 
 export async function deleteUser(id) {
   if (!id || typeof id !== "string" || !ObjectId.isValid(id)) {
-    throw new Error("Invalid id");
+    throw "Invalid id";
   }
 
   let objId = new ObjectId(id);
@@ -156,7 +155,7 @@ export async function deleteUser(id) {
   let existing = await users.findOne({ _id: objId });
 
   if (!existing) {
-    throw new Error("User not found");
+    throw "User not found";
   }
 
   await users.deleteOne({ _id: objId });
@@ -169,7 +168,7 @@ export async function deleteUser(id) {
 
 export async function editUser(userData) {
   if (!userData || typeof userData !== "object") {
-    throw new Error("Invalid user data");
+    throw "Invalid user data";
   }
 
   if (
@@ -177,28 +176,28 @@ export async function editUser(userData) {
     typeof userData._id !== "string" ||
     !ObjectId.isValid(userData._id)
   ) {
-    throw new Error("Invalid user id");
+    throw "Invalid user id";
   }
 
   let isASCII = (s) => /^[\x00-\x7F]+$/.test(s);
 
   let checkStr = (v, name) => {
-    if (!v || typeof v !== "string") throw new Error(`Invalid ${name}`);
-    if (!isASCII(v)) throw new Error(`Invalid ${name}`);
+    if (!v || typeof v !== "string") throw `Invalid ${name}`;
+    if (!isASCII(v)) throw `Invalid ${name}`;
     let trimmed = v.trim();
-    if (!trimmed) throw new Error(`Invalid ${name}`);
+    if (!trimmed) throw `Invalid ${name}`;
     return trimmed;
   };
 
   let userName = checkStr(userData.userName, "username");
-  if (userName.length < 4) throw new Error("Invalid username");
+  if (userName.length < 4) throw "Invalid username";
 
   let firstName = checkStr(userData.firstName, "first name");
   let lastName = checkStr(userData.lastName, "last name");
 
   let email = checkStr(userData.email, "email").toLowerCase();
   if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    throw new Error("Invalid email");
+    throw "Invalid email";
   }
 
   let password = checkStr(userData.password, "password");
@@ -209,15 +208,14 @@ export async function editUser(userData) {
     !/[0-9]/.test(password) ||
     !/[!@#$%^&*()_\-+=<>?/[\]{}|~]/.test(password);
 
-  if (pwFails) throw new Error("Invalid password");
-
+  if (pwFails) throw "Invalid password";
   let dob = checkStr(userData.dob, "date of birth");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
-    throw new Error("Invalid date of birth");
+    throw "Invalid date of birth";
   }
 
   let parsed = new Date(dob);
-  if (isNaN(parsed.getTime())) throw new Error("Invalid date of birth");
+  if (isNaN(parsed.getTime())) throw "Invalid date of birth";
 
   let today = new Date();
   let isoToday = new Date(
@@ -226,7 +224,7 @@ export async function editUser(userData) {
     today.getDate()
   );
 
-  if (parsed > isoToday) throw new Error("Invalid date of birth");
+  if (parsed > isoToday) throw "Invalid date of birth";
 
   let passwordHash = await bcrypt.hash(password, 12);
 
