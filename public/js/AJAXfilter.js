@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const isActive = isActiveSelect.value;
 
     // Perform the AJAX request 
-    fetch(`/facilities?county=${county}&city=${city}&facilityType=${facilityType}&isActive=${isActive}`, {
+    fetch(`/facilities?county=${county}&city=${city}&facility_type=${facilityType}&isActive=${isActive}`, {
       headers: {
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="facility-name">
                   <a href="/facilities/${facility._id}">${facility.licensedFacilityName}</a>
                 </h3>
-                <p><strong>Type:</strong> ${facility.facilityType}</p>
+                <p><strong>Type:</strong> ${facility.facility_type}</p>
                 <p><strong>Address:</strong> ${facility.address}, ${facility.city}, ${facility.county} County</p>
                 <p><strong>Phone:</strong> ${facility.telephone}</p>
                 <p><strong>Email:</strong> <a href="mailto:${facility.email}">${facility.email}</a></p>
@@ -85,4 +85,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch all facilities
     fetchFacilities();
   });
+  fetchFacilities();
 });

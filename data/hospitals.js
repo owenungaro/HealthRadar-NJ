@@ -126,7 +126,7 @@ export async function getHospitalsThroughFiter(filters = {}) {
     if (county.trim().length === 0) throw "County cannot be empty.";
 
     county = county.trim().toUpperCase();
-    query.county = county;
+    query.county = { $regex: county, $options: 'i' };  // changed for filtering facilities with keywords
   }
 
   if (filters.city) {
@@ -135,7 +135,7 @@ export async function getHospitalsThroughFiter(filters = {}) {
     if (city.trim().length === 0) throw "City cannot be empty.";
 
     city = city.trim().toUpperCase();
-    query.city = city;
+    query.city = { $regex: city, $options: 'i' }; // changed for filtering facilities with keywords
   }
 
   if (filters.facility_type) {
@@ -144,7 +144,7 @@ export async function getHospitalsThroughFiter(filters = {}) {
     if (facilityType.trim().length === 0) throw "Facility type cannot be empty.";
 
     facilityType = facilityType.trim().toUpperCase();
-    query.facility_type = facilityType;
+    query.facility_type = { $regex: facilityType, $options: 'i' };  // changed for filtering facilities with keywords
   }
 
   if (filters.isActive !== undefined) {
