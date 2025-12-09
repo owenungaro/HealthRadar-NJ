@@ -62,19 +62,9 @@
   <select id="preferredLanguage" name="preferredLanguage" required>
     <option value="">-- Select Language --</option>
 
-    <option value="English"
-      {{#if (preferredLanguage)}}
-        {{#if (strcmp preferredLanguage "English")}}selected{{/if}}
-      {{/if}}
-    >English</option>
+    <option value="English">English</option>
+    <option value="Spanish">Spanish</option>
 
-    <option value="Spanish"
-      {{#if preferredLanguage}}
-        {{#if (strcmp preferredLanguage "Spanish")}}selected{{/if}}
-      {{/if}}
-    >Spanish</option>
-  </select>
-</div>
 
 
         <div class="form-group">
