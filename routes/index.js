@@ -1,23 +1,23 @@
-import authRoutes from './auth.js';
-import facilitiesRoutes from './facilities.js';
+import authRoutes from "./auth.js";
+import facilitiesRoutes from "./facilities.js";
 import emergencyRoutes from "./emergency.js";
+import analyticsRoutes from "./analytics.js";
 
 const constructorMethod = (app) => {
-  app.use('/auth', authRoutes);  
-  app.use('/facilities', facilitiesRoutes); 
+  app.use("/auth", authRoutes);
+  app.use("/facilities", facilitiesRoutes);
   app.use("/emergency", emergencyRoutes);
+  app.use("/analytics", analyticsRoutes);
 
-
-  app.get('/', (req, res) => {
-    res.render('home', {
-      title: 'HealthRadar NJ',
+  app.get("/", (req, res) => {
+    res.render("home", {
+      title: "HealthRadar NJ",
       user: req.session.user || null,
     });
   });
 
- 
-  app.use('*', (req, res) => {
-    res.status(404).json({ error: 'Route not found' });
+  app.use("*", (req, res) => {
+    res.status(404).json({ error: "Route not found" });
   });
 };
 

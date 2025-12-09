@@ -1,0 +1,97 @@
+<!-- 
+Cites:
+https://www.chartjs.org/docs/latest/charts/bar.html
+https://www.chartjs.org/docs/latest/charts/doughnut.html
+https://www.chartjs.org/docs/latest/charts/line.html
+https://cdn.jsdelivr.net/npm/chart.js
+
+Also sorry but prettier condensed it a lot lol
+-->
+<div
+  style="
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  margin-bottom:40px;
+"
+>
+
+  <section
+    style="
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+  "
+  >
+    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">Facilities by
+      County</h3>
+    <canvas id="countyChart" height="320"></canvas>
+  </section>
+
+  <section
+    style="
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+  "
+  >
+    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">Active vs
+      Inactive</h3>
+    <canvas id="statusChart" height="320"></canvas>
+  </section>
+
+  <section
+    style="
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+  "
+  >
+    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">Facility Types</h3>
+    <canvas id="typeChart" height="320"></canvas>
+  </section>
+
+  <section
+    style="
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+  "
+  >
+    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">License
+      Expiration Timeline</h3>
+    <canvas id="licenseChart" height="320"></canvas>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  let countyLabels = [{{#each hospitalsByCounty}}"{{this.county}}",{{/each}}];
+  let countyCounts = [{{#each hospitalsByCounty}}{{this.count}},{{/each}}]; let
+  statusLabels = [{{#each activeBreakdown}}"{{this.status}}",{{/each}}]; let
+  statusCounts = [{{#each activeBreakdown}}{{this.count}},{{/each}}]; let
+  typeLabels = [{{#each typeDistribution}}"{{this.type}}",{{/each}}]; let
+  typeCounts = [{{#each typeDistribution}}{{this.count}},{{/each}}]; let
+  licenseLabels = [{{#each licenseTimeline}}"{{this.month}}",{{/each}}]; let
+  licenseCounts = [{{#each licenseTimeline}}{{this.count}},{{/each}}]; new
+  Chart(countyChart, { type:"bar", data:{ labels:countyLabels,
+  datasets:[{label:"Facilities",data:countyCounts,backgroundColor:"#7bb5ff"}] },
+  options:{ plugins:{legend:{labels:{font:{size:13}}}},
+  scales:{x:{ticks:{font:{size:12}}},y:{ticks:{font:{size:12}}} }} }); new
+  Chart(statusChart, { type:"pie", data:{ labels:statusLabels,
+  datasets:[{data:statusCounts,backgroundColor:["#4CAF50","#FF6B6B"]}] },
+  options:{ plugins:{legend:{labels:{font:{size:14}}}}} }); new Chart(typeChart,
+  { type:"bar", data:{ labels:typeLabels,
+  datasets:[{label:"Facilities",data:typeCounts,backgroundColor:"#9d7dfb"}]},
+  options:{ plugins:{legend:{labels:{font:{size:13}}}},
+  scales:{x:{ticks:{font:{size:12},maxRotation:40,minRotation:40}} }} }); new
+  Chart(licenseChart, { type:"line", data:{ labels:licenseLabels,
+  datasets:[{label:"Expiring",data:licenseCounts,borderColor:"#4A90E2",tension:.2}]},
+  options:{ plugins:{legend:{labels:{font:{size:13}}}},
+  scales:{x:{ticks:{font:{size:11},maxRotation:35,minRotation:35}} }} }); /*
+  sources used: /* https://www.chartjs.org/docs/latest/ */
+</script>

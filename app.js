@@ -9,10 +9,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import connectDb from "./config/mongoConnection.js";
-import configRoutes from "./routes/index.js";  
+import configRoutes from "./routes/index.js";
 import { seedHospitals } from "./seed/seed.js";
 import { requireAuth } from "./middleware/authMiddleware.js";
-
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -66,21 +65,21 @@ app.use(
   })
 );
 
-app.get('/', (req, res) => {
-  res.render('home', {
-    title: 'HealthRadar NJ',
-    user: req.session.user || null,  
+app.get("/", (req, res) => {
+  res.render("home", {
+    title: "HealthRadar NJ",
+    user: req.session.user || null,
   });
 });
 
-app.get('/dashboard', requireAuth, (req, res) => {
-  res.render('dashboard', {
-    title: 'HealthRadar NJ Dashboard',
-    user: req.session.user,  
+app.get("/dashboard", requireAuth, (req, res) => {
+  res.render("dashboard", {
+    title: "HealthRadar NJ Dashboard",
+    user: req.session.user,
   });
 });
 
-configRoutes(app);  
+configRoutes(app);
 
 // Start server
 const port = process.env.PORT || 3000;
