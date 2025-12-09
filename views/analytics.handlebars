@@ -7,66 +7,45 @@ https://cdn.jsdelivr.net/npm/chart.js
 
 Also sorry but prettier condensed it a lot lol
 -->
-<div
-  style="
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:28px;
-  margin-bottom:40px;
-"
->
+<header class="dashboard-header">
+  <h1>Welcome to Analytics</h1>
 
-  <section
-    style="
-    background:white;
-    padding:22px;
-    border-radius:14px;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-  "
-  >
-    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">Facilities by
-      County</h3>
-    <canvas id="countyChart" height="320"></canvas>
+  {{#if user}}
+    <div class="facilities-actions">
+      <a href="/dashboard" class="dashboard-link">
+        <button class="back-to-dashboard-button">Back to Dashboard</button>
+      </a>
+
+      <form action="/auth/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+    </div>
+  {{/if}}
+</header>
+
+<div class="charts-grid">
+  <section class="chart-card bar-chart">
+    <h3>Facilities by County</h3>
+    <canvas id="countyChart"></canvas>
   </section>
 
-  <section
-    style="
-    background:white;
-    padding:22px;
-    border-radius:14px;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-  "
-  >
-    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">Active vs
-      Inactive</h3>
-    <canvas id="statusChart" height="320"></canvas>
+  <section class="chart-card pie-chart">
+    <h3>Active vs Inactive</h3>
+    <canvas id="statusChart"></canvas>
   </section>
 
-  <section
-    style="
-    background:white;
-    padding:22px;
-    border-radius:14px;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-  "
-  >
-    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">Facility Types</h3>
-    <canvas id="typeChart" height="320"></canvas>
+  <section class="chart-card bar-chart">
+    <h3>Facility Types</h3>
+    <canvas id="typeChart"></canvas>
   </section>
 
-  <section
-    style="
-    background:white;
-    padding:22px;
-    border-radius:14px;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-  "
-  >
-    <h3 style="margin-top:0; font-size:20px; margin-bottom:10px;">License
-      Expiration Timeline</h3>
-    <canvas id="licenseChart" height="320"></canvas>
+  <section class="chart-card line-chart">
+    <h3>License Expiration Timeline</h3>
+    <canvas id="licenseChart"></canvas>
   </section>
+
 </div>
+<!-- end .charts-grid -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
