@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Emergency Locator JS loaded");
 
@@ -52,10 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
           resultEl.innerHTML = `
             <div class="facility-card">
               <h3 class="facility-name">${fac.licensedFacilityName}</h3>
-              <p><strong>Type:</strong> ${fac.facilityType || "N/A"}</p>
-              <p><strong>Address:</strong> ${fac.address || ""}, ${fac.city || ""}, ${
-            fac.county || ""
-          } County</p>
+              <p><strong>Type:</strong> ${fac.facility_type || "N/A"}</p>
+              <p><strong>Address:</strong> ${fac.address || ""}, ${fac.city || ""}, ${fac.state || ""} ${fac.zipCode || ""}</p>
               <p><strong>Phone:</strong> ${fac.telephone || "N/A"}</p>
               <p><strong>Email:</strong> ${
                 fac.email

@@ -34,7 +34,6 @@ router.post("/signup", async (req, res) => {
       county,
       preferredLanguage,
       zipCode,
-      role,
       dob,
     } = req.body;
 
@@ -49,14 +48,23 @@ router.post("/signup", async (req, res) => {
       !county ||
       !preferredLanguage ||
       !zipCode ||
-      !role ||
       !dob
     ) {
-      return res.status(400).json({ error: "Missing required fields" });
+      return res.status(400).render("signup", {
+      title: "Sign Up",
+      hasErrors: true,
+      errors: ["All fields are required."],
+      ...req.body
+    });
     }
 
     if (password !== confirmPassword) {
-      return res.status(400).json({ error: "Passwords do not match" });
+      return res.status(400).render("signup", {
+      title: "Sign Up",
+      hasErrors: true,
+      errors: ["Passwords do not match."],
+      ...req.body
+    });
     }
 
     // Sanitize inputs
@@ -67,12 +75,17 @@ router.post("/signup", async (req, res) => {
     county = sanitizeString(county);
     zipCode = sanitizeString(zipCode);
     preferredLanguage = sanitizeString(preferredLanguage);
-    role = sanitizeString(role);
     dob = sanitizeString(dob);
 
     const existingUser = await usersData.findUserByEmailOrUsername(email);
     if (existingUser) {
-      return res.status(400).json({ error: "User already exists" });
+      return res.status(400).render("signup", {
+      title: "Sign Up",
+      hasErrors: true,
+      errors: ["User already exists."],
+      ...req.body
+    });
+
     }
 
 
@@ -84,7 +97,6 @@ router.post("/signup", async (req, res) => {
       lastName,
       email,
       dob,
-      role,
       county,
       zipCode,
       preferredLanguage,
@@ -101,7 +113,11 @@ router.post("/signup", async (req, res) => {
     res.redirect("/dashboard"); // Redirect to the dashboard after successful signup
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Signup failed" });
+  return res.status(400).render("signup", {
+    title: "Sign Up",
+    hasErrors: true,
+    errors: [err.toString()],
+    ...req.body });
   }
 });
 
