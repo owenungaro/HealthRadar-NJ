@@ -1,6 +1,8 @@
 import { hospitals as hospitalCollections } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
+import { sanitizeString, checkId } from "../helpers.js";
 
+//strictly for database seeding
 export async function createHospital(hospitalData) {
   const hospitals = await hospitalCollections();
 
@@ -43,7 +45,7 @@ export async function searchHospitalByName(hospitalName) {
   hospitalName = hospitalName.trim().toUpperCase();
 
   const desiredHospital = await hospitals.findOne({
-    licensed_name: hospitalName,
+    licensedFacilityName: hospitalName,
   });
 
   if (!desiredHospital) throw "Desired hospital was not found.";
@@ -69,7 +71,6 @@ export async function searchHospitalsByCity(city) {
 }
 
 export async function searchHospitalsByState(state) {
-  //Abbreviated to NJ, NY, CT, etc
   const hospitals = await hospitalCollections();
 
   if (state === null || state === undefined)
@@ -105,6 +106,64 @@ export async function searchHospitalsByCounty(county) {
   return hospitalsByCounty;
 }
 
+export async function getFacilityById(id) {
+    id = checkId(id, "facilityId");
+    const facilities = await facilitiesCollection();
+    const facility = await facilities.findOne({ _id: new ObjectId(id) });
+    
+    if (!facility) throw "Facility not found";
+    
+    return facility;
+}
+
+export async function getHospitalsThroughFiter(filters = {}) {
+  const hospitals = await hospitalCollections();
+  const query = {};
+
+  if (filters.county) {
+    let county = filters.county;
+    if (typeof county !== "string") throw "Invalid county type.";
+    if (county.trim().length === 0) throw "County cannot be empty.";
+
+    county = county.trim().toUpperCase();
+    query.county = county;
+  }
+
+  if (filters.city) {
+    let city = filters.city;
+    if (typeof city !== "string") throw "Invalid city type.";
+    if (city.trim().length === 0) throw "City cannot be empty.";
+
+    city = city.trim().toUpperCase();
+    query.city = city;
+  }
+
+  if (filters.facility_type) {
+    let facilityType = filters.facility_type;
+    if (typeof facilityType !== "string") throw "Invalid facility type.";
+    if (facilityType.trim().length === 0) throw "Facility type cannot be empty.";
+
+    facilityType = facilityType.trim().toUpperCase();
+    query.facility_type = facilityType;
+  }
+
+  if (filters.isActive !== undefined) {
+    const licenseStatus = filters.isActive;
+    if (typeof licenseStatus !== 'boolean') throw "Invalid license status type.";
+
+    query.isActive = licenseStatus;
+  }
+
+  const filteredHospitals = await hospitals.find(query).toArray();
+
+  if (!filteredHospitals) {
+    throw "No hospitals found for the desired queries.";
+  }
+
+  return filteredHospitals;
+}
+
+
 export async function updateHospital(
   _id,
   facility_type,
@@ -126,4 +185,10 @@ export async function updateHospital(
   isActive,
   averageRating,
   totalReviews
-) {}
+) {
+
+}
+
+export async function deleteHospital(_id) {
+
+} 

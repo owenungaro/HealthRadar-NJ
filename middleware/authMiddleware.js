@@ -6,8 +6,6 @@ export function requireAuth(req, res, next) {
   next();
 };
 
-
-
 export function requireAdmin(req, res, next) {
   if (!req.session.user || req.session.user.role !== 'admin') {
     return res.status(403).json({ error: 'Admin role required' });

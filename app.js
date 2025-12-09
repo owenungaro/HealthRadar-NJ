@@ -86,3 +86,14 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
+
+
+/*
+Testing
+*/
+
+import { searchHospitalByName, getHospitalsThroughFiter } from "./data/hospitals.js"; 
+
+const hospitalList = await getHospitalsThroughFiter({facility_type: "ambulatory care facility", county: "SOMERset", isActive: true});
+console.log(hospitalList);

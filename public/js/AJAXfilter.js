@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.facilities.length) {
-          const facilityListHtml = data.facilities.map(facility => {
+        if (data.hospitals.length) {
+          const facilityListHtml = data.hospitals.map(facility => {
             return `
               <div class="facility-card">
                 <h3 class="facility-name">
