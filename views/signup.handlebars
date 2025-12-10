@@ -6,7 +6,7 @@
   <div class="login-bg">
     <div class="login-container signup-container">
         
-      <h2>Sign Up</h2>
+      <h2>{{translateText "Sign Up"}}</h2>
 
       {{#if hasErrors}}
         <div class="error-box">
@@ -21,68 +21,70 @@
       <form action="/auth/signup" method="POST" class="signup-form">
 
         <div class="form-group">
-          <label for="userName">Username</label>
-          <input type="text" id="userName" name="userName" placeholder="Enter username" value="{{userName}}" required>
+          <label for="userName">{{translateText "Username"}}</label>
+          <input type="text" id="userName" name="userName" value="{{userName}}" required>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" placeholder="First name" value="{{firstName}}" required>
+            <label for="firstName">{{translateText "First Name"}}</label>
+            <input type="text" id="firstName" name="firstName" value="{{firstName}}" required>
           </div>
           <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Last name" value="{{lastName}}" required>
+            <label for="lastName">{{translateText "Last Name"}}</label>
+            <input type="text" id="lastName" name="lastName" value="{{lastName}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="dob">Date of Birth</label>
+          <label for="dob">{{translateText "Date of Birth"}}</label>
           <input type="date" id="dob" name="dob" value="{{dob}}" required>
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="your.email@example.com" value="{{email}}" required>
+          <label for="email">{{translateText "Email Address"}}</label>
+          <input type="email" id="email" name="email" value="{{email}}" required>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="county">County</label>
-            <input type="text" id="county" name="county" placeholder="County" value="{{county}}" required>
+            <label for="county">{{translateText "County"}}</label>
+            <input type="text" id="county" name="county" value="{{county}}" required>
           </div>
           <div class="form-group">
-            <label for="zipCode">Zip Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="07302" value="{{zipCode}}" required>
+            <label for="zipCode">{{translateText "Zip Code"}}</label>
+            <input type="text" id="zipCode" name="zipCode" value="{{zipCode}}" required>
           </div>
         </div>
 
         <div class="form-group">
-  <label for="preferredLanguage">Preferred Language</label>
-  <select id="preferredLanguage" name="preferredLanguage" required>
-    <option value="">-- Select Language --</option>
+          <label for="preferredLanguage">{{translateText "Preferred Language"}}</label>
+          <select id="preferredLanguage" name="preferredLanguage" required>
+        <option value="">{{translateText "-- Select Language --"}}</option>
 
-    <option value="English">English</option>
-    <option value="Spanish">Spanish</option>
+        <option value="English">English</option>
+        <option value="Spanish">Spanish</option>
+          </select>
+          </div>
 
 
 
         <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Create password" required>
+          <label for="password">{{translateText "Password"}}</label>
+          <input type="password" id="password" name="password" required>
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required>
+          <label for="confirmPassword">{{translateText "Confirm Password"}}</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required>
         </div>
 
-        <button type="submit">Create Account</button>
+        <button type="submit">{{translateText "Create Account"}}</button>
 
       </form>
 
       <div class="extra-links">
-        <a href="/">Already have an account? Sign in here</a>
+        <a href="/">{{translateText "Already have an account? Sign in here"}}</a>
       </div>
 
     </div>

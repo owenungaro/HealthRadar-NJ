@@ -1,13 +1,13 @@
 <header class="dashboard-header">
-  <h1>Welcome to Emergency Locator</h1>
+  <h1>{{translateText "Welcome to Emergency Locator"}}</h1>
   {{#if user}}
     <div class="facilities-actions">
       <a href="/dashboard" class="dashboard-link">
-        <button class="back-to-dashboard-button">Back to Dashboard</button>
+        <button class="back-to-dashboard-button">{{translateText "Back to Dashboard"}}</button>
       </a>
 
       <form action="/auth/logout" method="POST" class="logout-form">
-        <button type="submit" class="logout-button">Logout</button>
+        <button type="submit" class="logout-button">{{translateText "Logout"}}</button>
       </form>
     </div>
   {{/if}}
@@ -19,13 +19,13 @@
 
 <main class="emergency-locator-main">
   <section class="emergency-locator-panel">
-    <h2>Find Your Nearest Emergency Center</h2>
+    <h2>{{translateText "Find Your Nearest Emergency Center"}}</h2>
     <p>
-      Click the button below to use your current location and find nearby emergency centers.
+      {{translateText "Click the button below to use your current location and find nearby emergency centers."}}
     </p>
 
     <button id="find-emergency-btn" class="logout-button">
-      Use My Location
+      {{translateText "Use My Location"}}
     </button>
 
     <p id="emergency-status" class="emergency-status-text"></p>

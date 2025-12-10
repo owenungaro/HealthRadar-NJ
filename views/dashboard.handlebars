@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthRadar NJ Dashboard</title>
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <title>{{translateText "HealthRadar NJ Dashboard"}}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
@@ -13,9 +12,9 @@
     </div>
 
     <header class="dashboard-header">
-      <h1>Welcome to the HealthRadar NJ Dashboard</h1>
+      <h1>{{translateText "Welcome to the HealthRadar NJ Dashboard"}}</h1>
       <form action="/auth/logout" method="POST" class="logout-form">
-        <button type="submit" class="logout-button">Logout</button>
+        <button type="submit" class="logout-button">{{translateText "Logout"}}</button>
       </form>
     </header>
 
@@ -25,7 +24,7 @@
           <a href="/facilities" class="card-link">
             <div class="card">
               <i class="fas fa-hospital-alt"></i>
-              <h3>Explore Facilities</h3>
+              <h3>{{translateText "Explore Facilities"}}</h3>
             </div>
           </a>
         </div>
@@ -34,7 +33,7 @@
           <a href="/reviews" class="card-link">
             <div class="card">
               <i class="fas fa-star"></i>
-              <h3>See Reviews</h3>
+              <h3>{{translateText "See Reviews"}}</h3>
             </div>
           </a>
         </div>
@@ -43,7 +42,7 @@
           <a href="/user-profile" class="card-link">
             <div class="card">
               <i class="fas fa-user-circle"></i>
-              <h3>User Profile</h3>
+              <h3>{{translateText "User Profile"}}</h3>
             </div>
           </a>
         </div>
@@ -52,7 +51,7 @@
           <a href="/analytics" class="card-link">
             <div class="card">
               <i class="fas fa-chart-line"></i>
-              <h3>Analytics Dashboard</h3>
+              <h3>{{translateText "Analytics Dashboard"}}</h3>
             </div>
           </a>
         </div>
@@ -61,7 +60,7 @@
           <a href="/emergency" class="card-link">
             <div class="card">
               <i class="fas fa-ambulance"></i>
-              <h3>Find Emergency Centers</h3>
+              <h3>{{translateText "Find Emergency Centers"}}</h3>
             </div>
           </a>
         </div>
