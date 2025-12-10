@@ -40,81 +40,87 @@ i18next.init({
         "High Contrast Mode": "Modo de contraste alto",
         "Explore Facilities": "Explora las instalaciones",
         "See Reviews": "ver reseñas",
-         "User Profile": "perfil de usuario",
-         "Analytics Dashboard": "Dashboard de Analytics",
-         "Find Emergency Centers": "Encuentra centros de emergencia",
-         "Logout": "cerrar sesión",
-         "HealthRadar NJ Dashboard": "Panel de control de HealthRadar NJ",
-         "Welcome to the HealthRadar NJ Dashboard": "Bienvenido al Panel de HealthRadar NJ",
-         "Welcome,": "Bienvenidos,",
-         "Sign up here": "regístrate aquí",
-         "Sign Up": "Registrarse",
-         "Username": "Nombre de Usuario",
-         "First Name": "Nombre",
-         "Last Name": "Apellido",
-         "Date of Birth": "Fecha de Nacimiento",
-         "Email Address": "Dirección de Correo Electrónico",
-         "County": "Condado",
-         "Zip Code": "Código Postal",
-         "Preferred Language": "Idioma Preferido",
-         "required": "requerido",
-         "-- Select Language --": "-- Seleccionar Idioma --",
-         "Password": "Contraseña",
-         "Confirm Password": "Confirmar contraseña",
-         "Create Account": "Crear Cuenta",
-         "Already have an account? Sign in here": "¿Ya tienes una cuenta? Inicie sesión aquí",
-         "Welcome to Emergency Locator": "Bienvenido al Localizador de Emergencia",
-         "Back to Dashboard": "Volver al Tablero",
-         "Find Your Nearest Emergency Center": "Encuentra tu Centro de Emergencias más Cercano",
-         "Click the button below to use your current location and find nearby emergency centers.": "haga clic en el botón de abajo para utilizar su ubicación actual y encontrar centros de emergencia cercanos.",
-         "Use My Location": "Usar mi Ubicación",
-         "Emergency Locator - HealthRadar NJ": "Localizador de Emergencias - HealthRadar NJ",
-         "Facilities by County": "Instalaciones por Condado",
-         "Active vs Inactive": "Activo vs Inactivo",
-         "Facility Types": "Tipos de Instalaciones",
-         "License Expiration Timeline": "Cronología de Caducidad de Licencia",
-         "Welcome to Analytics": "Bienvenido de Analytics",
-         "Type": "Tipo",
-         "Address": "Dirección",
-         "County": "Condado",
-         "Phone": "Teléfono",
-         "Email": "Correo Electrónico",
-         "License Expires": "La Licencia Expira",
-         "License Status": "Estado de la licencia",
-         "Status": "Estado",
-         "Active": "Activo",
-         "Inactive": "Inactivo",
-         "Admin": "Administración",
-         "Licensed Beds": "Camas con Licencia",
-         "Owner": "Propietario",
-         "Admin": "Admin",
-         "Average Rating": "Valoración Media",
-         "reviews": "comentarios",
-         "Reviews": "Comentarios",
-         "Reviews feature coming soon.": "Las Reseñas Vienen Pronto.",
-         "← Back to facility list": "← Volver a la Lista de Instalaciones",
-         "Welcome to Facilities": "Bienvenido a Instalaciones",
-         "Hospitals - HealthRadar NJ": "Hospitales - HealthRadar NJ",
-         "Filter": "Filtrar",
-         "Reset Filters": "restablecer filtros",
-         "No facilities found with these filters.": "No se han encontrado instalaciones con estos filtros."
-      }
-    }
-  }
-})
+        "User Profile": "perfil de usuario",
+        "Analytics Dashboard": "Dashboard de Analytics",
+        "Find Emergency Centers": "Encuentra centros de emergencia",
+        Logout: "cerrar sesión",
+        "HealthRadar NJ Dashboard": "Panel de control de HealthRadar NJ",
+        "Welcome to the HealthRadar NJ Dashboard":
+          "Bienvenido al Panel de HealthRadar NJ",
+        "Welcome,": "Bienvenidos,",
+        "Sign up here": "regístrate aquí",
+        "Sign Up": "Registrarse",
+        Username: "Nombre de Usuario",
+        "First Name": "Nombre",
+        "Last Name": "Apellido",
+        "Date of Birth": "Fecha de Nacimiento",
+        "Email Address": "Dirección de Correo Electrónico",
+        County: "Condado",
+        "Zip Code": "Código Postal",
+        "Preferred Language": "Idioma Preferido",
+        required: "requerido",
+        "-- Select Language --": "-- Seleccionar Idioma --",
+        Password: "Contraseña",
+        "Confirm Password": "Confirmar contraseña",
+        "Create Account": "Crear Cuenta",
+        "Already have an account? Sign in here":
+          "¿Ya tienes una cuenta? Inicie sesión aquí",
+        "Welcome to Emergency Locator":
+          "Bienvenido al Localizador de Emergencia",
+        "Back to Dashboard": "Volver al Tablero",
+        "Find Your Nearest Emergency Center":
+          "Encuentra tu Centro de Emergencias más Cercano",
+        "Click the button below to use your current location and find nearby emergency centers.":
+          "haga clic en el botón de abajo para utilizar su ubicación actual y encontrar centros de emergencia cercanos.",
+        "Use My Location": "Usar mi Ubicación",
+        "Emergency Locator - HealthRadar NJ":
+          "Localizador de Emergencias - HealthRadar NJ",
+        "Facilities by County": "Instalaciones por Condado",
+        "Active vs Inactive": "Activo vs Inactivo",
+        "Facility Types": "Tipos de Instalaciones",
+        "License Expiration Timeline": "Cronología de Caducidad de Licencia",
+        "Welcome to Analytics": "Bienvenido de Analytics",
+        Type: "Tipo",
+        Address: "Dirección",
+        County: "Condado",
+        Phone: "Teléfono",
+        Email: "Correo Electrónico",
+        "License Expires": "La Licencia Expira",
+        "License Status": "Estado de la licencia",
+        Status: "Estado",
+        Active: "Activo",
+        Inactive: "Inactivo",
+        Admin: "Administración",
+        "Licensed Beds": "Camas con Licencia",
+        Owner: "Propietario",
+        Admin: "Admin",
+        "Average Rating": "Valoración Media",
+        reviews: "comentarios",
+        Reviews: "Comentarios",
+        "Reviews feature coming soon.": "Las Reseñas Vienen Pronto.",
+        "← Back to facility list": "← Volver a la Lista de Instalaciones",
+        "Welcome to Facilities": "Bienvenido a Instalaciones",
+        "Hospitals - HealthRadar NJ": "Hospitales - HealthRadar NJ",
+        Filter: "Filtrar",
+        "Reset Filters": "restablecer filtros",
+        "No facilities found with these filters.":
+          "No se han encontrado instalaciones con estos filtros.",
+      },
+    },
+  },
+});
 
-export default i18next
+export default i18next;
 
 function translateText(text) {
-  return i18next.t(text)
+  return i18next.t(text);
 }
-
 
 // Handlebars setup
 const hbs = exphbs.create({
   defaultLayout: "main",
   layoutsDir: path.join(__dirname, "views/layouts"),
-  helpers: {translateText}
+  helpers: { translateText },
 });
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
@@ -153,7 +159,7 @@ app.get("/", (req, res) => {
   res.render("home", {
     title: "HealthRadar NJ",
     user: req.session.user || null,
-    language: "en"
+    language: "en",
   });
 });
 
@@ -161,7 +167,7 @@ app.get("/dashboard", requireAuth, (req, res) => {
   res.render("dashboard", {
     title: "HealthRadar NJ Dashboard",
     user: req.session.user,
-    language: "en"
+    language: "en",
   });
 });
 
@@ -173,4 +179,11 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
 
-
+// import { createReview } from "./data/reviews.js";
+// console.log(
+//   await createReview(
+//     "testtest132",
+//     "6930956666c7a2e2c86559ed",
+//     "691e74757cf463c3dd98cde9"
+//   )
+// );
