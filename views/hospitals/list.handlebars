@@ -1,0 +1,98 @@
+<div class="dashboard-header">
+  <h1>Welcome to Facilities</h1>
+
+  {{#if user}}
+    <div class="facilities-actions">
+      <a href="/dashboard" class="dashboard-link">
+        <button class="back-to-dashboard-button">Back to Dashboard</button>
+      </a>
+
+      <form action="/auth/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+    </div>
+  {{/if}}
+</div>
+
+<div class="logo-container">
+  <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
+</div>
+
+<!-- Filters -->
+<form id="facility-filters" class="facility-filters">
+  <label>County:
+    <input type="text" name="county" id="county" value="{{filters.county}}">
+  </label>
+
+  <label>City:
+    <input type="text" name="city" id="city" value="{{filters.city}}">
+  </label>
+
+  <label>Type:
+    <input type="text" name="facility_type" id="facilityType" value="{{filters.facility_type}}">
+  </label>
+
+  <label>License Status:
+    <select name="isActive" id="isActive">
+      <option value="">All</option>
+      <option value="true"  {{#if filters.isActive}}selected{{/if}}>Active</option>
+      <option value="false" {{#unless filters.isActive}}selected{{/unless}}>Inactive</option>cl
+    </select>
+  </label>
+
+  <button type="submit">Filter</button>
+  <button type="button" id="reset-filters">Reset Filters</button>
+</form>
+
+<!-- Facility Results -->
+<div id="facility-list-container">
+
+  {{#if facilities.length}}
+    <div class="facility-list">
+
+      {{#each facilities}}
+      <div class="facility-card">
+
+        <h3 class="facility-name">
+          <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
+        </h3>
+
+        <p><strong>Type:</strong> {{this.facility_type}}</p>    <!-- FIXED -->
+
+        <p><strong>Address:</strong>
+          {{this.address}}, {{this.city}}, {{this.county}} County
+        </p>
+
+        <p><strong>Phone:</strong> {{this.telephone}}</p>
+
+        {{#if this.email}}
+          <p><strong>Email:</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
+        {{else}}
+          <p><strong>Email:</strong> <i>No email on file</i></p>
+        {{/if}}
+
+        <p><strong>License Status:</strong>
+          {{#if this.isActive}}
+            <span class="status-active">Active</span>
+          {{else}}
+            <span class="status-inactive">Inactive</span>
+          {{/if}}
+        </p>
+
+        <p><strong>Average Rating:</strong>
+          {{this.averageRating}} ({{this.totalReviews}} reviews)
+        </p>
+
+      </div>
+      {{/each}}
+
+    </div>
+
+  {{else}}
+
+    <p>No facilities found with these filters.</p>
+
+  {{/if}}
+</div>
+
+<script src="/public/js/AJAXfilter.js"></script>

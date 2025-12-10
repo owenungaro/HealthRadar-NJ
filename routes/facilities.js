@@ -60,6 +60,7 @@ router.get("/:id", requireAuth, async (req, res) => {
     res.render("hospitals/detail", {
       title: hospital.licensedFacilityName,
       hospital,
+      facility: hospital,
       user: req.session.user || null,
     });
   } catch (err) {

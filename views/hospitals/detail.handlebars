@@ -1,0 +1,62 @@
+<div class="facilities-header">
+  <h2>{{facility.licensedFacilityName}}</h2>
+
+  {{#if user}}
+    <div class="facilities-actions">
+      <a href="/dashboard" class="dashboard-link">Back to Dashboard</a>
+
+      <form action="/auth/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+    </div>
+  {{/if}}
+</div>
+
+<section class="facility-info">
+  <p><strong>Type:</strong> {{facility.facility_type}}</p>
+  <p><strong>Address:</strong>
+    {{facility.address}},
+    {{facility.city}},
+    {{facility.state}}
+    {{facility.zipCode}}</p>
+  <p><strong>County:</strong> {{facility.county}}</p>
+  <p><strong>Phone:</strong> {{facility.telephone}}</p>
+
+  {{#if facility.email}}
+    <p><strong>Email:</strong>
+      <a href="mailto:{{facility.email}}">{{facility.email}}</a></p>
+  {{else}}
+    <p><strong>Email:</strong> <i>No email available</i></p>
+  {{/if}}
+
+  <p><strong>License Expires:</strong> {{facility.licenseExpires}}</p>
+
+  <p>
+    <strong>Status:</strong>
+    {{#if facility.isActive}}
+      <span class="status-active">Active</span>
+    {{else}}
+      <span class="status-inactive">Inactive</span>
+    {{/if}}
+  </p>
+
+  <p><strong>Licensed Beds:</strong> {{facility.licensedBeds}}</p>
+  <p><strong>Owner:</strong> {{facility.licensedOwner}}</p>
+  <p><strong>Admin:</strong>
+    {{facility.adminName}}
+    ({{facility.adminUserName}})</p>
+
+  <p>
+    <strong>Average Rating:</strong>
+    {{facility.averageRating}}
+    <span>({{facility.totalReviews}} reviews)</span>
+  </p>
+</section>
+
+<hr />
+
+<h3>Reviews</h3>
+<p>Reviews feature coming soon.</p>
+
+<br />
+<p><a href="/facilities">← Back to facility list</a></p>

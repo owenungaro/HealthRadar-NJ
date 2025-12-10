@@ -107,13 +107,13 @@ export async function searchHospitalsByCounty(county) {
 }
 
 export async function getFacilityById(id) {
-    id = checkId(id, "facilityId");
-    const facilities = await facilitiesCollection();
-    const facility = await facilities.findOne({ _id: new ObjectId(id) });
-    
-    if (!facility) throw "Facility not found";
-    
-    return facility;
+  id = checkId(id, "facilityId");
+  const facilities = await hospitalCollections();
+  const facility = await facilities.findOne({ _id: new ObjectId(id) });
+
+  if (!facility) throw "Facility not found";
+
+  return facility;
 }
 
 export async function getHospitalsThroughFiter(filters = {}) {
@@ -126,7 +126,7 @@ export async function getHospitalsThroughFiter(filters = {}) {
     if (county.trim().length === 0) throw "County cannot be empty.";
 
     county = county.trim().toUpperCase();
-    query.county = { $regex: county, $options: 'i' };  // changed for filtering facilities with keywords
+    query.county = { $regex: county, $options: "i" }; // changed for filtering facilities with keywords
   }
 
   if (filters.city) {
@@ -135,21 +135,23 @@ export async function getHospitalsThroughFiter(filters = {}) {
     if (city.trim().length === 0) throw "City cannot be empty.";
 
     city = city.trim().toUpperCase();
-    query.city = { $regex: city, $options: 'i' }; // changed for filtering facilities with keywords
+    query.city = { $regex: city, $options: "i" }; // changed for filtering facilities with keywords
   }
 
   if (filters.facility_type) {
     let facilityType = filters.facility_type;
     if (typeof facilityType !== "string") throw "Invalid facility type.";
-    if (facilityType.trim().length === 0) throw "Facility type cannot be empty.";
+    if (facilityType.trim().length === 0)
+      throw "Facility type cannot be empty.";
 
     facilityType = facilityType.trim().toUpperCase();
-    query.facility_type = { $regex: facilityType, $options: 'i' };  // changed for filtering facilities with keywords
+    query.facility_type = { $regex: facilityType, $options: "i" }; // changed for filtering facilities with keywords
   }
 
   if (filters.isActive !== undefined) {
     const licenseStatus = filters.isActive;
-    if (typeof licenseStatus !== 'boolean') throw "Invalid license status type.";
+    if (typeof licenseStatus !== "boolean")
+      throw "Invalid license status type.";
 
     query.isActive = licenseStatus;
   }
@@ -162,7 +164,6 @@ export async function getHospitalsThroughFiter(filters = {}) {
 
   return filteredHospitals;
 }
-
 
 export async function updateHospital(
   _id,
@@ -185,10 +186,6 @@ export async function updateHospital(
   isActive,
   averageRating,
   totalReviews
-) {
+) {}
 
-}
-
-export async function deleteHospital(_id) {
-
-} 
+export async function deleteHospital(_id) {}
