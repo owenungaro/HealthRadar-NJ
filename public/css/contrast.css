@@ -63,7 +63,7 @@ body::before {
 
 /* Login Container */
 .login-container {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 24px;
   padding: 50px 60px;
@@ -88,7 +88,7 @@ body::before {
 
 /* Heading */
 h2 {
-  color: #2d3748;
+  color: #ffffff;
   font-size: 32px;
   margin-bottom: 30px;
   text-align: center;
@@ -122,7 +122,7 @@ h2 {
 .login-form button {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #002fff 0%, #b56bff 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -148,7 +148,7 @@ h2 {
 .dashboard-links button {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #002fff 0%, #ba75ff 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -166,7 +166,7 @@ h2 {
 .dashboard-links a:hover,
 .dashboard-links button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 6px 20px rgba(80, 112, 255, 0.6);
 }
 
 .dashboard-links form {
@@ -174,7 +174,7 @@ h2 {
 }
 
 .dashboard-links button {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #f06bff 0%, #ff0022 100%);
   margin-top: 10px;
 }
 
@@ -185,7 +185,7 @@ h2 {
 }
 
 .extra-links a {
-  color: #667eea;
+  color: #002fff;
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
@@ -200,7 +200,7 @@ h2 {
 /* Logout Button Styling */
 .logout-button,.back-to-dashboard-button {
   padding: 16px;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #f06eff 0%, #ff0022 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -279,7 +279,7 @@ footer {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 40px 30px;
@@ -296,7 +296,7 @@ footer {
 
 .card i {
   font-size: 48px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #002fff 0%, #8000ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -305,7 +305,7 @@ footer {
 }
 
 .card h3 {
-  color: #2d3748;
+  color: #ffffff;
   font-size: 20px;
   font-weight: 600;
   margin: 0;
@@ -313,7 +313,7 @@ footer {
 
 /* Dashboard Header */
 .dashboard-header,.facilities-header {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   padding: 30px 40px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -326,7 +326,7 @@ footer {
 }
 
 .dashboard-header h1 {
-  color: #2d3748;
+  color: #ffffff;
   font-size: 28px;
   font-weight: 700;
   margin: 0;
@@ -346,7 +346,7 @@ footer {
 
 .logout-button {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #e600ff 0%, #ff0022 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -364,7 +364,7 @@ footer {
 
 /* Facilities Cards */
 .facility-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 20px;
@@ -391,17 +391,17 @@ footer {
   font-size: 18px;
   margin-bottom: 10px;
   font-weight: 600;
-  color: #2d3748;
+  color: #ffffff;
 }
 
 .facility-card p {
   font-size: 14px;
-  color: #4a5568;
+  color: #ffffff;
   margin-bottom: 10px;
 }
 
 .facility-card a {
-  color: #4a90e2;
+  color: #0077ff;
   text-decoration: none;
 }
 
@@ -410,12 +410,12 @@ footer {
 }
 
 .status-active {
-  color: green;
+  color: rgb(0, 255, 0);
   font-weight: bold;
 }
 
 .status-inactive {
-  color: red;
+  color: rgb(255, 0, 0);
   font-weight: bold;
 }
 
@@ -505,7 +505,7 @@ footer {
 .signup-form button {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #002fff 0%, #be7dff 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -553,7 +553,7 @@ footer {
 .accessibilityButton {
   width: 200px;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #002fff 0%, #c081ff 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -567,6 +567,7 @@ footer {
   margin: 0 auto;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
+
 
 .footerthing {
   color:black

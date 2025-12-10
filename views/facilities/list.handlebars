@@ -1,13 +1,13 @@
 <div class="dashboard-header">
-  <h1>Welcome to Facilities</h1>
+  <h1>{{translateText "Welcome to Facilities"}}</h1>
   {{#if user}}
     <div class="facilities-actions">
       <a href="/dashboard" class="dashboard-link">
-        <button class="back-to-dashboard-button">Back to Dashboard</button>
+        <button class="back-to-dashboard-button">{{translateText "Back to Dashboard"}}</button>
       </a>
 
       <form action="/auth/logout" method="POST" class="logout-form">
-        <button type="submit" class="logout-button">Logout</button>
+        <button type="submit" class="logout-button">{{translateText "Logout"}}</button>
       </form>
     </div>
   {{/if}}
@@ -19,30 +19,30 @@
 <!-- Filters Form -->
 <form id="facility-filters" class="facility-filters">
   <label>
-    County:
+    {{translateText "County:"}}
     <input type="text" name="county" id="county" value="{{filters.county}}" />
   </label>
   <label>
-    City:
+    {{translateText "City:"}}
     <input type="text" name="city" id="city" value="{{filters.city}}" />
   </label>
   <label>
-    Type:
+    {{translateText "Type:"}}
     <input type="text" name="facilityType" id="facilityType" value="{{filters.facilityType}}" />
   </label>
   <label>
-  License Status:
+  {{translateText "License Status:"}}
   <select name="isActive" id="isActive">
-    <option value="">All</option> <!-- When "All" is selected, it should be empty -->
-    <option value="true" {{#if filters.isActive}}{{#if (eq filters.isActive 'true')}} selected {{/if}}{{/if}}>Active</option>
-    <option value="false" {{#if filters.isActive}}{{#if (eq filters.isActive 'false')}} selected {{/if}}{{/if}}>Inactive</option>
+    <option value="">{{translateText "All"}}</option> <!-- When "All" is selected, it should be empty -->
+    <option value="true" {{#if filters.isActive}}{{#if (eq filters.isActive 'true')}} {{translateText "selected"}} {{/if}}{{/if}}>{{translateText "Active"}}</option>
+    <option value="false" {{#if filters.isActive}}{{#if (eq filters.isActive 'false')}} {{translateText "selected"}} {{/if}}{{/if}}>{{translateText "Inactive"}}</option>
   </select>
 </label>
   
-  <button type="submit">Filter</button>
+  <button type="submit">{{translateText "Filter"}}</button>
   
   <button type="button" id="reset-filters">
-    Reset Filters
+    {{translateText "Reset Filters"}}
   </button>
 </form>
 
@@ -55,23 +55,23 @@
           <h3 class="facility-name">
             <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
           </h3>
-          <p><strong>Type:</strong> {{this.facilityType}}</p>
-          <p><strong>Address:</strong> {{this.address}}, {{this.city}}, {{this.county}} County</p>
-          <p><strong>Phone:</strong> {{this.telephone}}</p>
-          <p><strong>Email:</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
-          <p><strong>License Status:</strong> 
+          <p><strong>{{translateText "Type:"}}</strong> {{this.facilityType}}</p>
+          <p><strong>{{translateText "Address:"}}</strong> {{this.address}}, {{this.city}}, {{this.county}} {{translateText "County"}}</p>
+          <p><strong>{{translateText "Phone"}}:</strong> {{this.telephone}}</p>
+          <p><strong>{{translateText "Email:"}}</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
+          <p><strong>{{translateText "License Status:"}}</strong> 
             {{#if this.isActive}} 
-              <span class="status-active">Active</span>
+              <span class="status-active">{{translateText "Active"}}</span>
             {{else}} 
-              <span class="status-inactive">Inactive</span>
+              <span class="status-inactive">{{translateText "Inactive"}}</span>
             {{/if}}
           </p>
-          <p><strong>Average Rating:</strong> {{this.averageRating}} ({{this.totalReviews}} reviews)</p>
+          <p><strong>{{translateText "Average Rating:"}}</strong> {{this.averageRating}} ({{this.totalReviews}} {{translateText "reviews"}})</p>
         </div>
       {{/each}}
     </div>
   {{else}}
-    <p>No facilities found with these filters.</p>
+    <p>{{translateText "No facilities found with these filters."}}</p>
   {{/if}}
 </div>
 

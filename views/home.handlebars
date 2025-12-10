@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HealthRadar NJ</title>
-  <link rel="stylesheet" href="/public/css/styles.css">
   
 </head>
 <body>
@@ -15,33 +14,29 @@
   <div class="login-bg">
     <div class="login-container">
       {{#if user}}
-        <h2>Welcome, {{user.userName}}!</h2>
+        <h2>{{translateText "Welcome,"}} {{user.userName}}!</h2>
         <div class="dashboard-links">
-          <a href="/facilities">Explore Facilities</a>
-          <a href="/reviews">See Reviews</a>
-          <a href="/user-profile">User Profile</a>
-          <a href="/analytics">Analytics Dashboard</a>
-          <a href="/emergency">Find Emergency Centers</a>
+          <a href="/facilities">{{translateText "Explore Facilities"}}</a>
+          <a href="/reviews">{{translateText "See Reviews"}}</a>
+          <a href="/user-profile">{{translateText "User Profile"}}</a>
+          <a href="/analytics">{{translateText "Analytics Dashboard"}}</a>
+          <a href="/emergency">{{translateText "Find Emergency Centers"}}</a>
           <form action="/auth/logout" method="POST">
-            <button type="submit">Logout</button>
+            <button type="submit">{{translateText "Logout"}}</button>
           </form>
         </div>
       {{else}}
         <form action="/auth/login" method="POST" class="login-form">
-          <h2>Sign In</h2>
+          <h2>{{translateText "Sign In"}}</h2>
           <input type="text" name="identifier" placeholder="Username or Email" required>
           <input type="password" name="password" placeholder="Password" required>
-          <button type="submit">Sign In</button>
+          <button type="submit">{{translateText "Sign In"}}</button>
         </form>
         <div class="extra-links">
-          <a href="/auth/signup">Sign up here</a>
+          <a href="/auth/signup">{{translateText "Sign up here"}}</a>
         </div>
       {{/if}}
     </div>
   </div>
-
-  <footer>
-    <p>&copy; 2025 HealthRadar NJ. Developed by Group 27.</p>
-  </footer>
 </body>
 </html>
