@@ -19,19 +19,19 @@
 <!-- Filters Form -->
 <form id="facility-filters" class="facility-filters">
   <label>
-    {{translateText "County:"}}
+    {{translateText "County"}}:
     <input type="text" name="county" id="county" value="{{filters.county}}" />
   </label>
   <label>
-    {{translateText "City:"}}
+    {{translateText "City"}}:
     <input type="text" name="city" id="city" value="{{filters.city}}" />
   </label>
   <label>
-    {{translateText "Type:"}}
+    {{translateText "Type"}}:
     <input type="text" name="facilityType" id="facilityType" value="{{filters.facilityType}}" />
   </label>
   <label>
-  {{translateText "License Status:"}}
+  {{translateText "License Status"}}:
   <select name="isActive" id="isActive">
     <option value="">{{translateText "All"}}</option> <!-- When "All" is selected, it should be empty -->
     <option value="true" {{#if filters.isActive}}{{#if (eq filters.isActive 'true')}} {{translateText "selected"}} {{/if}}{{/if}}>{{translateText "Active"}}</option>
@@ -55,18 +55,18 @@
           <h3 class="facility-name">
             <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
           </h3>
-          <p><strong>{{translateText "Type:"}}</strong> {{this.facilityType}}</p>
-          <p><strong>{{translateText "Address:"}}</strong> {{this.address}}, {{this.city}}, {{this.county}} {{translateText "County"}}</p>
+          <p><strong>{{translateText "Type"}}:</strong> {{this.facilityType}}</p>
+          <p><strong>{{translateText "Address"}}:</strong> {{this.address}}, {{this.city}}, {{this.county}} {{translateText "County"}}</p>
           <p><strong>{{translateText "Phone"}}:</strong> {{this.telephone}}</p>
-          <p><strong>{{translateText "Email:"}}</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
-          <p><strong>{{translateText "License Status:"}}</strong> 
+          <p><strong>{{translateText "Email"}}:</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
+          <p><strong>{{translateText "License Status"}}:</strong> 
             {{#if this.isActive}} 
               <span class="status-active">{{translateText "Active"}}</span>
             {{else}} 
               <span class="status-inactive">{{translateText "Inactive"}}</span>
             {{/if}}
           </p>
-          <p><strong>{{translateText "Average Rating:"}}</strong> {{this.averageRating}} ({{this.totalReviews}} {{translateText "reviews"}})</p>
+          <p><strong>{{translateText "Average Rating"}}:</strong> {{this.averageRating}} ({{this.totalReviews}} {{translateText "reviews"}})</p>
         </div>
       {{/each}}
     </div>

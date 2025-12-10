@@ -8,7 +8,7 @@ https://cdn.jsdelivr.net/npm/chart.js
 Also sorry but prettier condensed it a lot lol
 -->
 <header class="dashboard-header">
-  <h1>Welcome to Analytics</h1>
+  <h1>{{translateText "Welcome to Analytics"}}</h1>
 
   {{#if user}}
     <div class="facilities-actions">
@@ -25,22 +25,22 @@ Also sorry but prettier condensed it a lot lol
 
 <div class="charts-grid">
   <section class="chart-card bar-chart">
-    <h3>Facilities by County</h3>
+    <h3>{{translateText "Facilities by County"}}</h3>
     <canvas id="countyChart"></canvas>
   </section>
 
   <section class="chart-card pie-chart">
-    <h3>Active vs Inactive</h3>
+    <h3>{{translateText "Active vs Inactive"}}</h3>
     <canvas id="statusChart"></canvas>
   </section>
 
   <section class="chart-card bar-chart">
-    <h3>Facility Types</h3>
+    <h3>{{translateText "Facility Types"}}</h3>
     <canvas id="typeChart"></canvas>
   </section>
 
   <section class="chart-card line-chart">
-    <h3>License Expiration Timeline</h3>
+    <h3>{{translateText "License Expiration Timeline"}}</h3>
     <canvas id="licenseChart"></canvas>
   </section>
 
