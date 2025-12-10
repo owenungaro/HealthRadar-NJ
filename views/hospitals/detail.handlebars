@@ -3,9 +3,9 @@
 
   {{#if user}}
     <div class="facilities-actions">
-      <a href="/dashboard" class="dashboard-link">{{translateText
-          "Back to Dashboard"
-        }}</a>
+      <a href="/dashboard" class="dashboard-link">
+        <button class="back-to-dashboard-button">{{translateText "Back to Dashboard"}}</button>
+      </a>
 
       <form action="/auth/logout" method="POST" class="logout-form">
         <button type="submit" class="logout-button">{{translateText
@@ -62,7 +62,7 @@
 
 <hr />
 
-<h3>Reviews</h3>
+<h3>{{translateText "Reviews"}}</h3>
 
 <div class="reviews-section">
   {{#if reviewError}}
@@ -80,12 +80,12 @@
     {{/each}}
 
   {{else}}
-    <p><i>No reviews yet. Be the first to review this facility!</i></p>
+    <p><i>{{translateText "No reviews yet. Be the first to review this facility!"}}</i></p>
   {{/if}}
 
   <hr />
 
-  <h3>Leave a Review</h3>
+  <h3>{{translateText "Leave a Review"}}</h3>
 
   {{#if user}}
     <form
@@ -105,11 +105,11 @@
       ></textarea>
 
       <br />
-      <button type="submit" class="review-submit-btn">Submit Review</button>
+      <button type="submit" class="review-submit-btn">{{translateText "Submit Review"}}</button>
 
     </form>
   {{else}}
-    <p><i>You must be logged in to leave a review.</i></p>
+    <p><i>{{translateText "You must be logged in to leave a review."}}</i></p>
   {{/if}}
 
 </div>

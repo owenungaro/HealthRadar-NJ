@@ -105,6 +105,12 @@ i18next.init({
         "Reset Filters": "restablecer filtros",
         "No facilities found with these filters.":
           "No se han encontrado instalaciones con estos filtros.",
+          "You must be logged in to leave a review.": "Debes iniciar sesión para dejar una reseña.",
+          "Submit Review": "Enviar reseña",
+          "Leave a Review": "Deja una reseña",
+          "No reviews yet. Be the first to review this facility!": "Aún no hay reseñas. ¡Sé el primero en revisar esta instalación!",
+          "Write your review...": "Escribe tu reseña...",
+          "My Reviews": "Mis Comentarios"
       },
     },
   },
