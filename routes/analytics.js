@@ -97,6 +97,7 @@ router.route("/").get(requireAuth, async (req, res) => {
       activeBreakdown: activeBreakdown,
       typeDistribution: typeDistribution,
       licenseTimeline: licenseTimeline,
+      user: req.session.user,
 
       countyLabels: JSON.stringify(hospitalsByCounty.map((x) => x.county)),
       countyCounts: JSON.stringify(hospitalsByCounty.map((x) => x.count)),

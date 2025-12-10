@@ -5,31 +5,36 @@
   box-sizing: border-box;
 }
 
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: url('/public/images/background.jpg') no-repeat center center fixed;
-  background-size: cover;  /* Ensures the image covers the whole page */
+  background: url("/public/images/background.jpg") no-repeat center center fixed;
+  background-size: cover; /* Ensures the image covers the whole page */
   position: relative;
   color: #333;
   margin-left: 5px;
-  margin-right: 5px
-  
+  margin-right: 5px;
 }
 
 body::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(99, 179, 237, 0.3) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(120, 119, 198, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(99, 179, 237, 0.3) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
 
@@ -198,7 +203,8 @@ h2 {
 }
 
 /* Logout Button Styling */
-.logout-button,.back-to-dashboard-button {
+.logout-button,
+.back-to-dashboard-button {
   padding: 16px;
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: white;
@@ -211,7 +217,8 @@ h2 {
   box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
 }
 
-.logout-button:hover,.back-to-dashboard-button  {
+.logout-button:hover,
+.back-to-dashboard-button {
   transform: translateY(-9px);
   box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
 }
@@ -223,10 +230,7 @@ footer {
   padding: 20px;
   font-size: 14px;
   margin-top: 500px;
-  
 }
-
-
 
 .logout-form {
   margin: 0;
@@ -312,7 +316,8 @@ footer {
 }
 
 /* Dashboard Header */
-.dashboard-header,.facilities-header {
+.dashboard-header,
+.facilities-header {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 30px 40px;
@@ -331,7 +336,6 @@ footer {
   font-weight: 700;
   margin: 0;
 }
-
 
 .dashboard-link {
   color: #667eea;
@@ -373,14 +377,14 @@ footer {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
 .facility-filters {
-  margin-top: 30px; 
-  margin-bottom: 30px; 
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .facility-card {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 .facility-card:hover {
   transform: translateY(-5px);
@@ -422,7 +426,7 @@ footer {
 .facilities-actions {
   display: flex;
   flex-direction: row;
-  align-items: middle;  /* Vertically center items */
+  align-items: middle; /* Vertically center items */
   gap: 12px;
 }
 
@@ -544,7 +548,7 @@ footer {
   .form-row {
     grid-template-columns: 1fr;
   }
-  
+
   .signup-container {
     padding: 35px 30px;
   }
@@ -570,4 +574,38 @@ footer {
 
 .footerthing {
   color:black
+}
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  padding: 15px;
+}
+
+.chart-card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-card canvas {
+  flex: 1;
+  width: 100% !important;
+}
+
+.pie-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.pie-chart canvas {
+  max-width: 55%;
+  height: auto !important;
+  flex: 0 !important;
 }
