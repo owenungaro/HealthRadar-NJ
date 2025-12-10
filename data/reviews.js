@@ -35,8 +35,26 @@ export async function getReviewsByUser(userId) {
     .find({ userID: new ObjectId(userId) })
     .toArray();
 
-  if (desiredReviews.length === 0)
-    throw "User is either invalid, or there were no reviews with this given user.";
+  for (let review of desiredReviews) {
+    try {
+      const user = await usersData.findUserById(review.userID.toString());
+      review.username = user.userName;
+    } catch (e) {
+      review.username = "Unknown User";
+    }
+
+    review.dateFormatted = new Date(review.createdAt).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }
+    );
+  }
+
+  //   if (desiredReviews.length === 0)
+  //     throw "User is either invalid, or there were no reviews with this given user.";
 
   return desiredReviews;
 }

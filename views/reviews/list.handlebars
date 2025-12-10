@@ -1,0 +1,25 @@
+<div class="facilities-header">
+  <h2>My Reviews</h2>
+
+  <div class="facilities-actions">
+    <a href="/dashboard" class="dashboard-link">Back to Dashboard</a>
+  </div>
+</div>
+
+<section class="reviews-section">
+
+  {{#if reviews.length}}
+    {{#each reviews}}
+      <div class="review-card">
+        <p><strong>{{this.username}}</strong></p>
+        <p>{{this.review}}</p>
+        <p><i>{{this.dateFormatted}}</i></p>
+      </div>
+      <hr />
+    {{/each}}
+
+  {{else}}
+    <p><i>You haven't written any reviews yet.</i></p>
+  {{/if}}
+
+</section>
