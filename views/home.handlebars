@@ -1,42 +1,64 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HealthRadar NJ</title>
-  
-</head>
-<body>
-  <div class="logo-container">
-    <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HealthRadar NJ</title>
 
-  <div class="login-bg">
-    <div class="login-container">
-      {{#if user}}
-        <h2>{{translateText "Welcome,"}} {{user.userName}}!</h2>
-        <div class="dashboard-links">
-          <a href="/facilities">{{translateText "Explore Facilities"}}</a>
-          <a href="/reviews">{{translateText "See Reviews"}}</a>
-          <a href="/user-profile">{{translateText "User Profile"}}</a>
-          <a href="/analytics">{{translateText "Analytics Dashboard"}}</a>
-          <a href="/emergency">{{translateText "Find Emergency Centers"}}</a>
-          <form action="/auth/logout" method="POST">
-            <button type="submit">{{translateText "Logout"}}</button>
-          </form>
-        </div>
-      {{else}}
-        <form action="/auth/login" method="POST" class="login-form">
-          <h2>{{translateText "Sign In"}}</h2>
-          <input type="text" name="identifier" placeholder="Username or Email" required>
-          <input type="password" name="password" placeholder="Password" required>
-          <button type="submit">{{translateText "Sign In"}}</button>
-        </form>
-        <div class="extra-links">
-          <a href="/auth/signup">{{translateText "Sign up here"}}</a>
+  </head>
+  <body>
+    {{!-- <p style="color:red; font-weight:bold; font-size:18px;">
+      DEBUG routeError: "{{routeError}}"
+    </p> --}}
+
+    <div class="logo-container">
+      <img
+        src="/public/images/healthradar_logo.svg"
+        alt="HealthRadar Logo"
+        class="logo"
+      />
+    </div>
+
+    <div class="login-bg">
+      {{#if routeError}}
+        <div class="route-error">
+          {{routeError}}
         </div>
       {{/if}}
+      <div class="login-container">
+        {{#if user}}
+          <h2>{{translateText "Welcome,"}} {{user.userName}}!</h2>
+          <div class="dashboard-links">
+            <a href="/facilities">{{translateText "Explore Facilities"}}</a>
+            <a href="/reviews">{{translateText "See Reviews"}}</a>
+            {{!-- <a href="/user-profile">{{translateText "User Profile"}}</a> --}}
+            <a href="/analytics">{{translateText "Analytics Dashboard"}}</a>
+            <a href="/emergency">{{translateText "Find Emergency Centers"}}</a>
+            <form action="/auth/logout" method="POST">
+              <button type="submit">{{translateText "Logout"}}</button>
+            </form>
+          </div>
+        {{else}}
+          <form action="/auth/login" method="POST" class="login-form">
+            <h2>{{translateText "Sign In"}}</h2>
+            <input
+              type="text"
+              name="identifier"
+              placeholder="Username or Email"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+            <button type="submit">{{translateText "Sign In"}}</button>
+          </form>
+          <div class="extra-links">
+            <a href="/auth/signup">{{translateText "Sign up here"}}</a>
+          </div>
+        {{/if}}
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

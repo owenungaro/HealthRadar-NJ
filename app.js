@@ -155,13 +155,13 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.render("home", {
-    title: "HealthRadar NJ",
-    user: req.session.user || null,
-    language: "en",
-  });
-});
+// app.get("/", (req, res) => {
+//   res.render("home", {
+//     title: "HealthRadar NJ",
+//     user: req.session.user || null,
+//     language: "en",
+//   });
+// });
 
 app.get("/dashboard", requireAuth, (req, res) => {
   res.render("dashboard", {
