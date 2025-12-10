@@ -24,14 +24,19 @@ const constructorMethod = (app) => {
   });
 
   app.get("/", (req, res) => {
+    const errorMessage = req.session.routeError;
+    req.session.routeError = null;
+
     res.render("home", {
       title: "HealthRadar NJ",
       user: req.session.user || null,
+      routeError: errorMessage,
     });
   });
 
   app.use("*", (req, res) => {
-    res.status(404).json({ error: "Route not found" });
+    req.session.routeError = "Page not found. You were redirected home.";
+    res.redirect("/");
   });
 };
 

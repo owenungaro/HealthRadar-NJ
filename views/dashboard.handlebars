@@ -1,20 +1,28 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{translateText "HealthRadar NJ Dashboard"}}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
   </head>
   <body>
     <div class="logo-container">
-      <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
+      <img
+        src="/public/images/healthradar_logo.svg"
+        alt="HealthRadar Logo"
+        class="logo"
+      />
     </div>
 
     <header class="dashboard-header">
       <h1>{{translateText "Welcome to the HealthRadar NJ Dashboard"}}</h1>
       <form action="/auth/logout" method="POST" class="logout-form">
-        <button type="submit" class="logout-button">{{translateText "Logout"}}</button>
+        <button type="submit" class="logout-button">{{translateText
+            "Logout"
+          }}</button>
       </form>
     </header>
 
@@ -38,14 +46,14 @@
           </a>
         </div>
 
-        <div class="feature-card">
+        {{!-- <div class="feature-card">
           <a href="/user-profile" class="card-link">
             <div class="card">
               <i class="fas fa-user-circle"></i>
               <h3>{{translateText "User Profile"}}</h3>
             </div>
           </a>
-        </div>
+        </div> --}}
 
         <div class="feature-card">
           <a href="/analytics" class="card-link">
@@ -66,7 +74,6 @@
         </div>
       </section>
     </main>
-
 
   </body>
 </html>
