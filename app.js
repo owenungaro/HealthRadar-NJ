@@ -12,6 +12,7 @@ import connectDb from "./config/mongoConnection.js";
 import configRoutes from "./routes/index.js";
 import { seedHospitals } from "./seed/seed.js";
 import { requireAuth } from "./middleware/authMiddleware.js";
+import { createUser } from "./data/users.js";
 
 import i18next from "i18next";
 
@@ -135,6 +136,27 @@ if (process.env.RUN_SEED === "true" || process.env.RUN_SEED === "TRUE") {
   console.log("Finished seeding");
 }
 
+// Add admin if required
+if (
+  process.env.CREATE_ADMIN === "true" ||
+  process.env.CREATE_ADMIN === "TRUE"
+) {
+  await createUser({
+    userName: "Admin",
+    firstName: "System",
+    lastName: "Admin",
+    dob: "1990-01-01",
+    role: "admin",
+    email: "admin@example.com",
+    county: null,
+    zipCode: null,
+    preferredLanguage: "en",
+    password: "Admin123!",
+  });
+
+  console.log("Admin added to database");
+}
+
 // Sessions stored in Mongo
 app.use(
   session({
@@ -178,12 +200,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
-
-// import { createReview } from "./data/reviews.js";
-// console.log(
-//   await createReview(
-//     "testtest132",
-//     "6930956666c7a2e2c86559ed",
-//     "691e74757cf463c3dd98cde9"
-//   )
-// );
