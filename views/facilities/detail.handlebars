@@ -12,15 +12,15 @@
   {{/if}}
 </div>
 
-<p><strong>{{translateText "Type:"}}</strong> {{facility.facilityType}}</p>
-<p><strong>{{translateText "Address:"}}</strong> {{facility.address}}, {{facility.city}}, {{facility.state}} {{facility.zipCode}}</p>
-<p><strong>{{translateText "County:"}}</strong> {{facility.county}}</p>
-<p><strong>{{translateText "Phone:"}}</strong> {{facility.telephone}}</p>
-<p><strong>{{translateText "Email:"}}</strong> <a href="mailto:{{facility.email}}">{{facility.email}}</a></p>
+<p><strong>{{translateText "Type"}}:</strong> {{facility.facilityType}}</p>
+<p><strong>{{translateText "Address"}}:</strong> {{facility.address}}, {{facility.city}}, {{facility.state}} {{facility.zipCode}}</p>
+<p><strong>{{translateText "County"}}:</strong> {{facility.county}}</p>
+<p><strong>{{translateText "Phone"}}:</strong> {{facility.telephone}}</p>
+<p><strong>{{translateText "Email"}}:</strong> <a href="mailto:{{facility.email}}">{{facility.email}}</a></p>
 
-<p><strong>{{translateText "License Expires:"}}</strong> {{facility.licenseExpires}}</p>
+<p><strong>{{translateText "License Expires"}}:</strong> {{facility.licenseExpires}}</p>
 <p>
-  <strong>{{translateText "License Status:"}}</strong>
+  <strong>{{translateText "License Status"}}:</strong>
   {{#if facility.isActive}}
     <span class="status-active">{{translateText "Active"}}</span>
   {{else}}
@@ -28,12 +28,12 @@
   {{/if}}
 </p>
 
-<p><strong>{{translateText "Licensed Beds:"}}</strong> {{facility.licensedBeds}}</p>
-<p><strong>{{translateText "Owner:"}}</strong> {{facility.licensedOwner}}</p>
-<p><strong>{{translateText "Admin:"}}</strong> {{facility.adminName}} ({{facility.adminUsername}})</p>
+<p><strong>{{translateText "Licensed Beds"}}:</strong> {{facility.licensedBeds}}</p>
+<p><strong>{{translateText "Owner"}}:</strong> {{facility.licensedOwner}}</p>
+<p><strong>{{translateText "Admin"}}:</strong> {{facility.adminName}} ({{facility.adminUsername}})</p>
 
 <p>
-  <strong>{{translateText "Average Rating:"}}</strong> {{facility.averageRating}} 
+  <strong>{{translateText "Average Rating"}}:</strong> {{facility.averageRating}} 
   ({{facility.totalReviews}} {{translateText "reviews"}})
 </p>
 
