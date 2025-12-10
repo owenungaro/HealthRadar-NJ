@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { hospitalsData } from "../data/index.js";
+import { hospitalsData, reviewsData } from "../data/index.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
+import { getReviewsByHospital } from "../data/reviews.js";
 
 const router = Router();
 
@@ -51,25 +52,55 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
-// Get hospital by ID
-router.get("/:id", requireAuth, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const hospital = await hospitalsData.getFacilityById(id);
+router
+  .route("/:id")
+  .post(requireAuth, async (req, res) => {
+    try {
+      const hospitalId = req.params.id;
+      const userId = req.session.user._id;
+      const { reviewText } = req.body;
 
-    res.render("hospitals/detail", {
-      title: hospital.licensedFacilityName,
-      hospital,
-      facility: hospital,
-      user: req.session.user || null,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(404).render("error", {
-      title: "Hospital Not Found",
-      error: "Hospital not found.",
-    });
-  }
-});
+      await reviewsData.createReview(reviewText, userId, hospitalId);
+
+      // redirect back to the facility detail page
+      return res.redirect(`/facilities/${hospitalId}`);
+    } catch (err) {
+      // console.error(err);
+
+      const hospitalId = req.params.id;
+      const hospital = await hospitalsData.getFacilityById(hospitalId);
+      const reviews = await reviewsData.getReviewsByHospital(hospitalId);
+
+      return res.status(400).render("hospitals/detail", {
+        title: hospital.licensedFacilityName,
+        hospital,
+        facility: hospital,
+        user: req.session.user || null,
+        reviews,
+        reviewError: err.toString(),
+      });
+    }
+  })
+  .get(requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const hospital = await hospitalsData.getFacilityById(id);
+      const reviews = await reviewsData.getReviewsByHospital(id);
+
+      res.render("hospitals/detail", {
+        title: hospital.licensedFacilityName,
+        hospital,
+        facility: hospital,
+        user: req.session.user || null,
+        reviews,
+      });
+    } catch (err) {
+      // console.error(err);
+      res.status(404).render("error", {
+        title: "Hospital Not Found",
+        error: "Hospital not found.",
+      });
+    }
+  });
 
 export default router;
