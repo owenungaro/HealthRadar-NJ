@@ -1,20 +1,9 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import { usersData } from "../data/index.js"; // Assuming you have user data functionality
+import { sanitizeString } from "../helpers.js";
 
 const router = Router();
-
-// Utility to sanitize strings and prevent XSS
-function sanitizeString(value) {
-  if (typeof value !== "string") return value;
-  return value
-    .trim()
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
 
 // Route for sign up
 router.get("/signup", (req, res) => {

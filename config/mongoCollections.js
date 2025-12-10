@@ -16,11 +16,13 @@ const getCollectionFn = (collection) => {
 export const users = getCollectionFn("users");
 export const hospitals = getCollectionFn("hospitals");
 export const facilities = getCollectionFn("facilities");
+export const reviews = getCollectionFn("reviews");
 
 // we can add other feature part later
 
 export default {
   users,
   hospitals,
-  facilities
+  facilities,
+  reviews
 }
