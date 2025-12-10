@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let isAlreadyContrast = contrastRef.getAttribute("href").includes("contrast")
 
         if (isAlreadyContrast) {
-            contrastRef.setAttribute("href", "public/css/styles.css")
+            contrastRef.setAttribute("href", "/public/css/styles.css")
             contrastToggle.textContent = "High Contrast Mode"
             localStorage.setItem("contrast?", "nocontrast");
         }
