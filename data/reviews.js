@@ -34,6 +34,15 @@ export async function createReview(review, rating, userId, hospitalId) {
 
   const reviews = await reviewsCollections();
 
+  const existing = await reviews.findOne({
+    facilityID: new ObjectId(hospitalId),
+    userID: new ObjectId(userId),
+  });
+
+  if (existing) {
+    throw "You have already reviewed this facility";
+  }
+
   const newReview = {
     review,
     rating: numericRating,
