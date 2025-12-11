@@ -58,9 +58,14 @@ router
     try {
       const hospitalId = req.params.id;
       const userId = req.session.user._id;
-      const { reviewText } = req.body;
+      const { reviewText, rating } = req.body;
 
-      await reviewsData.createReview(reviewText, userId, hospitalId);
+      await reviewsData.createReview(
+        reviewText,
+        Number(rating),
+        userId,
+        hospitalId
+      );
 
       // redirect back to the facility detail page
       return res.redirect(`/facilities/${hospitalId}`);
