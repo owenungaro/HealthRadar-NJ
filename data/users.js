@@ -42,7 +42,6 @@ export async function createUser(userData) {
     throw "Invalid password";
   }
   // console.log(userData);
-  // SHIT DONT WORK
   let dob = checkStr(userData.dob, "date of birth");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
     throw "Invalid date of birth";
@@ -80,6 +79,98 @@ export async function createUser(userData) {
     lastName,
     dob,
     role: "citizen",
+    email,
+    county: userData.county || null,
+    zipCode: userData.zipCode || null,
+    preferredLanguage: userData.preferredLanguage || "en",
+    twoFactorEnabled: false,
+    passwordHash,
+    createdAt: new Date().toISOString(),
+    isVerified: false,
+  };
+
+  let result = await users.insertOne(doc);
+  return { _id: result.insertedId, ...doc };
+}
+
+
+export async function createAdmin(userData) {
+  if (!userData || typeof userData !== "object") {
+    throw "Invalid user data";
+  }
+
+  let isASCII = (s) => /^[\x00-\x7F]+$/.test(s);
+
+  let checkStr = (v, name) => {
+    if (!v || typeof v !== "string") throw `Invalid ${name}`;
+    if (!isASCII(v)) throw `Invalid ${name}`;
+    let trimmed = v.trim();
+    if (!trimmed) throw `Invalid ${name}`;
+    return trimmed;
+  };
+
+  let userName = checkStr(userData.userName, "username");
+  if (userName.length < 4) {
+    throw "Invalid username";
+  }
+
+  let firstName = checkStr(userData.firstName, "first name");
+  let lastName = checkStr(userData.lastName, "last name");
+
+  let email = checkStr(userData.email, "email").toLowerCase();
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    throw "Invalid email";
+  }
+
+  let password = checkStr(userData.password, "password");
+
+  let pwFails =
+    password.length < 7 ||
+    !/[A-Z]/.test(password) ||
+    !/[0-9]/.test(password) ||
+    !/[!@#$%^&*()_\-+=<>?/[\]{}|~]/.test(password);
+
+  if (pwFails) {
+    throw "Invalid password";
+  }
+  // console.log(userData);
+  let dob = checkStr(userData.dob, "date of birth");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    throw "Invalid date of birth";
+  }
+  let parsed = new Date(dob);
+  if (isNaN(parsed.getTime())) {
+    throw "Invalid date of birth";
+  }
+
+  let today = new Date();
+  let isoToday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  if (parsed > isoToday) {
+    throw "Invalid date of birth";
+  }
+
+  let users = await usersCollection();
+
+  let existing = await users.findOne({
+    $or: [{ email }, { userName }],
+  });
+
+  if (existing) {
+    throw "User already exists";
+  }
+
+  let passwordHash = await bcrypt.hash(password, 12);
+
+  let doc = {
+    userName,
+    firstName,
+    lastName,
+    dob,
+    role: "admin",
     email,
     county: userData.county || null,
     zipCode: userData.zipCode || null,

@@ -12,7 +12,8 @@ import connectDb from "./config/mongoConnection.js";
 import configRoutes from "./routes/index.js";
 import { seedHospitals } from "./seed/seed.js";
 import { requireAuth } from "./middleware/authMiddleware.js";
-import { createUser } from "./data/users.js";
+import { createAdmin } from "./data/users.js";
+import "./helpers.js"; 
 
 import i18next from "i18next";
 
@@ -150,7 +151,7 @@ if (
   process.env.CREATE_ADMIN === "true" ||
   process.env.CREATE_ADMIN === "TRUE"
 ) {
-  await createUser({
+  await createAdmin({
     userName: "Admin",
     firstName: "System",
     lastName: "Admin",
