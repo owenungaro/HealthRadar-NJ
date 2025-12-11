@@ -1,211 +1,207 @@
-  import { Router } from "express";
-  import { hospitalsData, reviewsData } from "../data/index.js";
-  import { requireAuth } from "../middleware/authMiddleware.js";
-  import { getReviewsByHospital } from "../data/reviews.js";
+import { Router } from "express";
+import { hospitalsData, reviewsData } from "../data/index.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
+import { getReviewsByHospital } from "../data/reviews.js";
 
-  const router = Router();
+const router = Router();
 
-  // List hospitals with filters
-  router.get("/", requireAuth, async (req, res) => {
+// List hospitals with filters
+router.get("/", requireAuth, async (req, res) => {
+  try {
+    const { county, city, facility_type, isActive } = req.query;
+
+    // Build filters object exactly like old facilities route
+    const filters = {
+      county: county || undefined,
+      city: city || undefined,
+      facility_type: facility_type || undefined,
+      isActive:
+        isActive !== undefined && isActive !== ""
+          ? isActive === "true" || isActive === true
+          : undefined,
+    };
+
+    const hospitals = await hospitalsData.getHospitalsThroughFiter(filters);
+
+    // AJAX / fetch() detection
+    if (
+      req.headers["x-requested-with"] === "XMLHttpRequest" ||
+      (req.headers.accept && req.headers.accept.includes("application/json"))
+    ) {
+      return res.json({ hospitals });
+    }
+
+    // Render list (same structure as old facilities route)
+    res.render("facilities/list", {
+      title: "Hospitals - HealthRadar NJ",
+      hospitals,
+      filters: {
+        county: county || "",
+        city: city || "",
+        facility_type: facility_type || "",
+        isActive: isActive || "",
+      },
+      user: req.session.user || null,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render("error", {
+      title: "Error",
+      error: "Could not load hospitals.",
+    });
+  }
+});
+
+router
+  .route("/:id")
+  .post(requireAuth, async (req, res) => {
     try {
-      const { county, city, facility_type, isActive } = req.query;
-
-      // Build filters object exactly like old facilities route
-      const filters = {
-        county: county || undefined,
-        city: city || undefined,
-        facility_type: facility_type || undefined,
-        isActive:
-          isActive !== undefined && isActive !== ""
-            ? isActive === "true" || isActive === true
-            : undefined,
-      };
       const hospitalId = req.params.id;
       const userId = req.session.user._id;
-      const { reviewText, rating } = req.body;
+      const { reviewText } = req.body;
 
-      await reviewsData.createReview(reviewText, rating, userId, hospitalId);
+      await reviewsData.createReview(reviewText, userId, hospitalId);
 
-      const hospitals = await hospitalsData.getHospitalsThroughFiter(filters);
+      // redirect back to the facility detail page
+      return res.redirect(`/facilities/${hospitalId}`);
+    } catch (err) {
+      // console.error(err);
 
-      // AJAX / fetch() detection
-      if (
-        req.headers["x-requested-with"] === "XMLHttpRequest" ||
-        (req.headers.accept && req.headers.accept.includes("application/json"))
-      ) {
-        return res.json({ hospitals });
-      }
+      const hospitalId = req.params.id;
+      const hospital = await hospitalsData.getFacilityById(hospitalId);
+      const reviews = await reviewsData.getReviewsByHospital(hospitalId);
 
-      // Render list (same structure as old facilities route)
-      res.render("facilities/list", {
-        title: "Hospitals - HealthRadar NJ",
-        hospitals,
-        filters: {
-          county: county || "",
-          city: city || "",
-          facility_type: facility_type || "",
-          isActive: isActive || "",
-        },
+      return res.status(400).render("hospitals/detail", {
+        title: hospital.licensedFacilityName,
+        hospital,
+        facility: hospital,
         user: req.session.user || null,
+        reviews,
+        reviewError: err.toString(),
+      });
+    }
+  })
+  .get(requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const hospital = await hospitalsData.getFacilityById(id);
+      const reviews = await reviewsData.getReviewsByHospital(id);
+
+      res.render("hospitals/detail", {
+        title: hospital.licensedFacilityName,
+        hospital,
+        facility: hospital,
+        user: req.session.user || null,
+        reviews,
       });
     } catch (err) {
-      console.error(err);
-      res.status(500).render("error", {
-        title: "Error",
-        error: "Could not load hospitals.",
+      // console.error(err);
+      res.status(404).render("error", {
+        title: "Hospital Not Found",
+        error: "Hospital not found.",
       });
     }
   });
 
-  router
-    .route("/:id")
-    .post(requireAuth, async (req, res) => {
-      try {
-        const hospitalId = req.params.id;
-        const userId = req.session.user._id;
-        const { reviewText } = req.body;
+router.get("/:id/edit", requireAuth, async (req, res) => {
+  try {
+    if (req.session.user.role !== "admin") {
+      return res.status(403).render("error", {
+        title: "Forbidden",
+        error: "You are not authorized to edit facilities.",
+      });
+    }
 
-        await reviewsData.createReview(reviewText, userId, hospitalId);
+    const hospital = await hospitalsData.getFacilityById(req.params.id);
 
-        // redirect back to the facility detail page
-        return res.redirect(`/facilities/${hospitalId}`);
-      } catch (err) {
-        // console.error(err);
+    hospital.licenseExpiresFormatted = hospital.licenseExpires
+      ? new Date(hospital.licenseExpires).toISOString().split("T")[0]
+      : "";
 
-        const hospitalId = req.params.id;
-        const hospital = await hospitalsData.getFacilityById(hospitalId);
-        const reviews = await reviewsData.getReviewsByHospital(hospitalId);
-
-        return res.status(400).render("hospitals/detail", {
-          title: hospital.licensedFacilityName,
-          hospital,
-          facility: hospital,
-          user: req.session.user || null,
-          reviews,
-          reviewError: err.toString(),
-        });
-      }
-    })
-    .get(requireAuth, async (req, res) => {
-      try {
-        const { id } = req.params;
-        const hospital = await hospitalsData.getFacilityById(id);
-        const reviews = await reviewsData.getReviewsByHospital(id);
-
-        res.render("hospitals/detail", {
-          title: hospital.licensedFacilityName,
-          hospital,
-          facility: hospital,
-          user: req.session.user || null,
-          reviews,
-        });
-      } catch (err) {
-        // console.error(err);
-        res.status(404).render("error", {
-          title: "Hospital Not Found",
-          error: "Hospital not found.",
-        });
-      }
+    res.render("hospitals/editHospital", {
+      title: `Edit ${hospital.licensedFacilityName}`,
+      hospital,
+      facility: hospital,
+      user: req.session.user,
     });
-
-    router.get("/:id/edit", requireAuth, async (req, res) => {
-
-      try {
-        if (req.session.user.role !== "admin") {
-          return res.status(403).render("error", {
-            title: "Forbidden",
-            error: "You are not authorized to edit facilities."
-          });
-        }
-
-        const hospital = await hospitalsData.getFacilityById(req.params.id);
-
-        hospital.licenseExpiresFormatted = hospital.licenseExpires ? new Date(hospital.licenseExpires).toISOString().split("T")[0] : "";
-
-        res.render("hospitals/editHospital", {
-          title: `Edit ${hospital.licensedFacilityName}`,
-          hospital,
-          facility: hospital, 
-          user: req.session.user
-        });
-      } catch (err) {
-        res.status(404).render("error", {
-          title: "Not Found",
-          error: "Hospital not found."
-        });
-      }
+  } catch (err) {
+    res.status(404).render("error", {
+      title: "Not Found",
+      error: "Hospital not found.",
     });
+  }
+});
 
-    router.post("/:id/edit", requireAuth, async (req, res) => {
-      try {
-        if (req.session.user.role !== "admin") {
-          return res.status(403).render("error", {
-            title: "Forbidden",
-            error: "You are not authorized to edit facilities."
-          });
-        }
+router.post("/:id/edit", requireAuth, async (req, res) => {
+  try {
+    if (req.session.user.role !== "admin") {
+      return res.status(403).render("error", {
+        title: "Forbidden",
+        error: "You are not authorized to edit facilities.",
+      });
+    }
 
-        const updatedData = req.body;
+    const updatedData = req.body;
 
-        delete updatedData.adminUserName;
-        updatedData.isActive = updatedData.isActive === "true";
-        updatedData.latitude = Number(updatedData.latitude);
-        updatedData.longitude = Number(updatedData.longitude);
-        await hospitalsData.updateHospital(
-          req.params.id,
-          updatedData.facility_type,
-          updatedData.licenseNumber,
-          updatedData.licensedFacilityName,
-          updatedData.address,
-          updatedData.city,
-          updatedData.state,
-          updatedData.zipCode,
-          updatedData.county,
-          updatedData.telephone,
-          updatedData.email,
-          updatedData.licenseExpires,
-          updatedData.adminName,
-          updatedData.licensedOwner,
-          updatedData.latitude,
-          updatedData.longitude,
-          updatedData.isActive,
-        );
+    delete updatedData.adminUserName;
+    updatedData.isActive = updatedData.isActive === "true";
+    updatedData.latitude = Number(updatedData.latitude);
+    updatedData.longitude = Number(updatedData.longitude);
+    await hospitalsData.updateHospital(
+      req.params.id,
+      updatedData.facility_type,
+      updatedData.licenseNumber,
+      updatedData.licensedFacilityName,
+      updatedData.address,
+      updatedData.city,
+      updatedData.state,
+      updatedData.zipCode,
+      updatedData.county,
+      updatedData.telephone,
+      updatedData.email,
+      updatedData.licenseExpires,
+      updatedData.adminName,
+      updatedData.licensedOwner,
+      updatedData.latitude,
+      updatedData.longitude,
+      updatedData.isActive
+    );
 
+    return res.redirect(`/facilities/${req.params.id}`);
+  } catch (err) {
+    console.error(err);
 
-        return res.redirect(`/facilities/${req.params.id}`);
-      } catch (err) {
-        console.error(err);
+    const hospital = await hospitalsData.getFacilityById(req.params.id);
 
-        const hospital = await hospitalsData.getFacilityById(req.params.id);
+    hospital.licenseExpiresFormatted = hospital.licenseExpires
+      ? hospital.licenseExpires.toISOString().split("T")[0]
+      : "";
 
-        hospital.licenseExpiresFormatted = hospital.licenseExpires ? hospital.licenseExpires.toISOString().split("T")[0] : "";
-
-        return res.status(400).render("hospitals/editHospital", {
-          title: `Edit ${hospital.licensedFacilityName}`,
-          hospital,
-          facility: hospital,
-          user: req.session.user,
-          error: err.toString()
-        });
-      }
+    return res.status(400).render("hospitals/editHospital", {
+      title: `Edit ${hospital.licensedFacilityName}`,
+      hospital,
+      facility: hospital,
+      user: req.session.user,
+      error: err.toString(),
     });
+  }
+});
 
-    router.post("/:id/delete", requireAuth, async (req, res) => {
-      try {
-        if (req.session.user.role !== "admin") {
-          return res.status(403).render("error", {
-            title: "Forbidden",
-            error: "You are not authorized to delete facilities."
-          });
-        }
+router.post("/:id/delete", requireAuth, async (req, res) => {
+  try {
+    if (req.session.user.role !== "admin") {
+      return res.status(403).render("error", {
+        title: "Forbidden",
+        error: "You are not authorized to delete facilities.",
+      });
+    }
 
-        await hospitalsData.deleteHospital(req.params.id);
-        return res.redirect("/facilities"); // redirect back to list
-      } catch (err) {
-        console.error(err);
-        return res.status(500).render("error", { title: "Error", error: err });
-      }
-    });
-    
+    await hospitalsData.deleteHospital(req.params.id);
+    return res.redirect("/facilities"); // redirect back to list
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("error", { title: "Error", error: err });
+  }
+});
 
-  export default router;
+export default router;
