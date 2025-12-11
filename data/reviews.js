@@ -2,26 +2,93 @@ import { ObjectId } from "mongodb";
 import { reviews as reviewsCollections } from "../config/mongoCollections.js";
 import { sanitizeString } from "../helpers.js";
 import { usersData } from "./index.js";
+import { hospitals as hospitalCollections } from "../config/mongoCollections.js";
 
-export async function createReview(review, userId, hospitalId) {
-  const sanitizedReview = sanitizeString(review);
-
-  if (sanitizedReview.length < 5 || sanitizedReview.length > 500)
+export async function createReview(review, rating, userId, hospitalId) {
+  review = sanitizeString(review);
+  if (review.length < 5 || review.length > 500) {
     throw "Review must be between 5 and 500 characters!";
+  }
 
-  if (!ObjectId.isValid(userId)) throw "Invalid user ID.";
-  if (!ObjectId.isValid(hospitalId)) throw "Invalid hospital ID.";
+  if (rating === undefined || rating === null) {
+    throw "Rating not found";
+  }
+
+  const numericRating = Number(rating);
+  if (isNaN(numericRating)) {
+    throw "Rating must be a number";
+  }
+  if (numericRating < 0.5 || numericRating > 5) {
+    throw "Rating must be between 0.5 and 5";
+  }
+  if (Math.round(numericRating * 2) !== numericRating * 2) {
+    throw "Rating must be in 0.5 increments";
+  }
+
+  if (!ObjectId.isValid(userId)) {
+    throw "Invalid user ID.";
+  }
+  if (!ObjectId.isValid(hospitalId)) {
+    throw "Invalid hospital ID.";
+  }
 
   const reviews = await reviewsCollections();
 
+  const existing = await reviews.findOne({
+    facilityID: new ObjectId(hospitalId),
+    userID: new ObjectId(userId),
+  });
+
+  if (existing) {
+    throw "You have already reviewed this facility";
+  }
+
   const newReview = {
-    review: sanitizedReview,
+    review,
+    rating: numericRating,
     facilityID: new ObjectId(hospitalId),
     userID: new ObjectId(userId),
     createdAt: new Date(),
   };
 
   const insertResult = await reviews.insertOne(newReview);
+
+  const hospitalObjectId = new ObjectId(hospitalId);
+
+  const results = await reviews
+    .aggregate([
+      { $match: { facilityID: hospitalObjectId } },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: "$rating" },
+          count: { $sum: 1 },
+        },
+      },
+    ])
+    .toArray();
+
+  let avgPercent = null;
+  let totalReviews = 0;
+
+  if (results.length > 0) {
+    const avgStars = results[0].avgRating;
+    totalReviews = results[0].count;
+
+    avgPercent = Math.round((avgStars / 5) * 100 * 10) / 10;
+  }
+
+  const hospitals = await hospitalCollections();
+
+  await hospitals.updateOne(
+    { _id: hospitalObjectId },
+    {
+      $set: {
+        averageRating: avgPercent,
+        totalReviews: totalReviews,
+      },
+    }
+  );
 
   return insertResult;
 }

@@ -20,6 +20,11 @@
             ? isActive === "true" || isActive === true
             : undefined,
       };
+      const hospitalId = req.params.id;
+      const userId = req.session.user._id;
+      const { reviewText, rating } = req.body;
+
+      await reviewsData.createReview(reviewText, rating, userId, hospitalId);
 
       const hospitals = await hospitalsData.getHospitalsThroughFiter(filters);
 

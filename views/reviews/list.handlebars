@@ -3,7 +3,9 @@
 
   <div class="facilities-actions">
     <a href="/dashboard" class="dashboard-link">
-        <button class="back-to-dashboard-button">{{translateText "Back to Dashboard"}}</button>
+      <button class="back-to-dashboard-button">{{translateText
+          "Back to Dashboard"
+        }}</button>
     </a>
   </div>
 </div>
@@ -14,6 +16,16 @@
     {{#each reviews}}
       <div class="review-card">
         <p><strong>{{this.username}}</strong></p>
+        <p>
+          <strong>{{translateText "Rating"}}:</strong>
+          {{#if this.rating}}
+            {{this.rating}}
+            / 5
+          {{else}}
+            <i>{{translateText "No rating provided"}}</i>
+          {{/if}}
+        </p>
+
         <p>{{this.review}}</p>
         <p><i>{{this.dateFormatted}}</i></p>
       </div>
@@ -21,7 +33,7 @@
     {{/each}}
 
   {{else}}
-    <p><i>You haven't written any reviews yet.</i></p>
+    <p><i>{{translateText "You haven't written any reviews yet"}}</i></p>
   {{/if}}
 
 </section>

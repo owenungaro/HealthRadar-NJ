@@ -95,7 +95,6 @@ i18next.init({
         Admin: "Administración",
         "Licensed Beds": "Camas con Licencia",
         Owner: "Propietario",
-        Admin: "Admin",
         "Average Rating": "Valoración Media",
         reviews: "comentarios",
         Reviews: "Comentarios",
@@ -111,8 +110,12 @@ i18next.init({
           "Submit Review": "Enviar reseña",
           "Leave a Review": "Deja una reseña",
           "No reviews yet. Be the first to review this facility!": "Aún no hay reseñas. ¡Sé el primero en revisar esta instalación!",
+          "You haven't written any reviews yet": "Aún no has escrito ninguna reseña",
           "Write your review...": "Escribe tu reseña...",
-          "My Reviews": "Mis Comentarios"
+          "My Reviews": "Mis Comentarios",
+          "All": "Todo",
+          "City": "Ciudad",
+          "Your Rating": "Su calificación"
       },
     },
   },

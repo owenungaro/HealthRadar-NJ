@@ -4,7 +4,9 @@
   {{#if user}}
     <div class="facilities-actions">
       <a href="/dashboard" class="dashboard-link">
-        <button class="back-to-dashboard-button">{{translateText "Back to Dashboard"}}</button>
+        <button class="back-to-dashboard-button">{{translateText
+            "Back to Dashboard"
+          }}</button>
       </a>
 
       <form action="/auth/logout" method="POST" class="logout-form">
@@ -55,7 +57,11 @@
 
   <p>
     <strong>{{translateText "Average Rating"}}:</strong>
-    {{facility.averageRating}}
+    {{#if facility.averageRating}}
+      {{facility.averageRating}}%
+    {{else}}
+      <i>{{translateText "No ratings yet"}}</i>
+    {{/if}}
     <span>({{facility.totalReviews}} {{translateText "reviews"}})</span>
   </p>
 
@@ -88,6 +94,15 @@
     {{#each reviews}}
       <div class="review-card">
         <p><strong>{{this.username}}</strong></p>
+        <p>
+          <strong>{{translateText "Rating"}}:</strong>
+          {{#if this.rating}}
+            {{this.rating}}
+            / 5
+          {{else}}
+            <i>{{translateText "No rating provided"}}</i>
+          {{/if}}
+        </p>
         <p>{{this.review}}</p>
         <p><i>{{this.dateFormatted}}</i></p>
       </div>
@@ -95,7 +110,9 @@
     {{/each}}
 
   {{else}}
-    <p><i>{{translateText "No reviews yet. Be the first to review this facility!"}}</i></p>
+    <p><i>{{translateText
+          "No reviews yet. Be the first to review this facility!"
+        }}</i></p>
   {{/if}}
 
   <hr />
@@ -109,6 +126,19 @@
       class="review-form"
     >
 
+      <h4>{{translateText "Your Rating"}}</h4>
+      <div class="star-rating">
+        <input type="hidden" name="rating" id="rating-input" value="0" />
+
+        <span class="star" data-star="1">&#9733;</span>
+        <span class="star" data-star="2">&#9733;</span>
+        <span class="star" data-star="3">&#9733;</span>
+        <span class="star" data-star="4">&#9733;</span>
+        <span class="star" data-star="5">&#9733;</span>
+
+        <span class="star-rating-value" id="rating-value">0 / 5</span>
+      </div>
+
       <textarea
         name="reviewText"
         placeholder="Write your review..."
@@ -120,7 +150,9 @@
       ></textarea>
 
       <br />
-      <button type="submit" class="review-submit-btn">{{translateText "Submit Review"}}</button>
+      <button type="submit" class="review-submit-btn">{{translateText
+          "Submit Review"
+        }}</button>
 
     </form>
   {{else}}
