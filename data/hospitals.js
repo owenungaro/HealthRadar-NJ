@@ -1,6 +1,6 @@
 import { hospitals as hospitalCollections } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
-import { sanitizeString, checkId } from "../helpers.js";
+import { sanitizeString, checkId, cleanString, normalizePhone } from "../helpers.js";
 
 //strictly for database seeding
 export async function createHospital(hospitalData) {
@@ -179,19 +179,14 @@ export async function updateHospital(
   email,
   licenseExpires,
   adminName,
-  adminUserName,
   licensedOwner,
   latitude,
   longitude,
   isActive,
-  averageRating,
-  totalReviews
 ) {
-
   if (!ObjectId.isValid(_id)) throw "Invalid ObjectId";
   const id = new ObjectId(_id);
 
-  //cleaning/normalizing all strings
   facility_type = cleanString(facility_type).toUpperCase();
   city = cleanString(city).toUpperCase();
   state = cleanString(state).toUpperCase();
@@ -207,40 +202,22 @@ export async function updateHospital(
   adminName = cleanString(adminName);
   licensedOwner = cleanString(licensedOwner);
 
-  //admin user validation
-  if (adminUserName !== null) adminUserName = cleanString(adminUserName);
-
-  //email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) throw "Invalid email format.";
 
-  //date validation
   const expires = new Date(licenseExpires);
-
   if (isNaN(expires.getTime())) throw "Invalid licenseExpires date";
-  
-  const now = new Date();
-  now.setHours(0, 0, 0, 0); 
-  expires.setHours(0, 0, 0, 0);
 
-  if (expires <= now) throw "licenseExpires must be a future date";
-  
-  //isActive boolean check
   if (typeof isActive !== "boolean")
-    throw new Error("isActive must be boolean");
+    throw "isActive must be boolean";
 
-  //making sure that latitute and longitude are numbers
   if (isNaN(Number(latitude))) throw "latitude must be numeric";
   if (isNaN(Number(longitude))) throw "longitude must be numeric";
 
-  if (averageRating !== null && isNaN(Number(averageRating))) throw "averageRating must be numeric or null";
-  if (totalReviews !== null && isNaN(Number(totalReviews))) throw "totalReviews must be numeric or null";
-  
-  // Normalize numbers
+
   latitude = Number(latitude);
   longitude = Number(longitude);
-  averageRating = averageRating === null ? null : Number(averageRating);
-  totalReviews = totalReviews === null ? null : Number(totalReviews);
+
 
   const updateDoc = {
     facility_type,
@@ -255,35 +232,30 @@ export async function updateHospital(
     email,
     licenseExpires: new Date(licenseExpires),
     adminName,
-    adminUserName,
     licensedOwner,
     latitude,
     longitude,
     isActive,
-    averageRating,
-    totalReviews,
   };
 
-  const hospitals = await hospitalCollections()
-
+  const hospitals = await hospitalCollections();
   const result = await hospitals.updateOne(
     { _id: id },
     { $set: updateDoc }
   );
 
   if (!result) throw "No hospital found with that id";
-
   return result;
 }
 
+
 export async function deleteHospital(_id) {
+  if (!ObjectId.isValid(_id)) throw "Invalid mongo id provided.";
   const hospitals = await hospitalCollections();
-
-  if(!ObjectId.isValid(_id)) throw "Invalid mongo id provided.";
-
   const id = new ObjectId(_id);
-  const deletedHospital = await hospitals.deleteOne({_id: id});
-  if(!deleteHospital) throw "Unable to delete hospital.";
+
+  const deletedHospital = await hospitals.deleteOne({ _id: id });
+  if (deletedHospital.deletedCount === 0) throw "Unable to delete hospital.";
 
   return deletedHospital;
 }

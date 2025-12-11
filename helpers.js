@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import xss from "xss";
+import Handlebars from "handlebars";
 
 export function sanitizeString(value) {
   if (typeof value !== "string") {
@@ -49,3 +50,8 @@ export function normalizePhone(phone) {
 
   return `(${area}) ${mid}-${last}`;
 }
+
+Handlebars.registerHelper("eq", function (a, b, options) {
+  return a === b ? options.fn(this) : options.inverse(this);
+});
+
