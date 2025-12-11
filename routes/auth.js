@@ -122,7 +122,12 @@ router.post("/login", async (req, res) => {
     }
 
     // Sanitize identifier
+    try {
     identifier = sanitizeString(identifier);
+  } catch (e) {
+    req.session.routeError = "Invalid username or email format";
+    return res.redirect("/");
+  }
 
     // Find user by email or username
     const user = await usersData.findUserByEmailOrUsername(identifier);
@@ -160,9 +165,10 @@ router.post("/login", async (req, res) => {
       res.redirect("/dashboard");
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Login failed" });
-  }
+  console.error(err);
+  req.session.routeError = "Login failed. Please check your username and password.";
+  return res.redirect("/");
+}
 });
 
 // Logout Route
