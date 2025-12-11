@@ -9,13 +9,20 @@
     </a>
   </div>
 </div>
-
+<div class="logo-container">
+  <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
+</div>
 <section class="reviews-section">
 
   {{#if reviews.length}}
     {{#each reviews}}
       <div class="review-card">
         <p><strong>{{this.username}}</strong></p>
+        <p>
+          <strong>{{translateText "Facility"}}:</strong>
+          <a href="/facilities/{{this.facilityId}}">{{this.facilityName}}</a>
+        </p>
+
         <p>
           <strong>{{translateText "Rating"}}:</strong>
           {{#if this.rating}}

@@ -68,14 +68,14 @@ export async function createReview(review, rating, userId, hospitalId) {
     ])
     .toArray();
 
-  let avgPercent = null;
+  let avgRating  = null;
   let totalReviews = 0;
 
   if (results.length > 0) {
     const avgStars = results[0].avgRating;
     totalReviews = results[0].count;
 
-    avgPercent = Math.round((avgStars / 5) * 100 * 10) / 10;
+    avgRating  = Math.round(avgStars * 10) / 10;
   }
 
   const hospitals = await hospitalCollections();
@@ -84,7 +84,7 @@ export async function createReview(review, rating, userId, hospitalId) {
     { _id: hospitalObjectId },
     {
       $set: {
-        averageRating: avgPercent,
+        averageRating: avgRating ,
         totalReviews: totalReviews,
       },
     }
@@ -102,12 +102,22 @@ export async function getReviewsByUser(userId) {
     .find({ userID: new ObjectId(userId) })
     .toArray();
 
+  const hospitals = await hospitalCollections();
+
   for (let review of desiredReviews) {
     try {
       const user = await usersData.findUserById(review.userID.toString());
       review.username = user.userName;
     } catch (e) {
       review.username = "Unknown User";
+    }
+
+    try {
+      const facility = await hospitals.findOne({ _id: review.facilityID });
+      review.facilityName = facility ? facility.licensedFacilityName : "Unknown Facility";
+      review.facilityId = review.facilityID.toString(); 
+    } catch (e) {
+      review.facilityName = "Unknown Facility";
     }
 
     review.dateFormatted = new Date(review.createdAt).toLocaleDateString(
