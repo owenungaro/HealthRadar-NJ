@@ -116,7 +116,9 @@ router.post("/login", async (req, res) => {
     let { identifier, password } = req.body;
 
     if (!identifier || !password) {
-      return res.status(400).json({ error: "Missing credentials" });
+    req.session.routeError = "missing credentials";
+    return res.redirect("/");
+
     }
 
     // Sanitize identifier
@@ -125,13 +127,17 @@ router.post("/login", async (req, res) => {
     // Find user by email or username
     const user = await usersData.findUserByEmailOrUsername(identifier);
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+    req.session.routeError = "missing credentials";
+    return res.redirect("/");
+
     }
 
     // Check password
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) {
-      return res.status(401).json({ error: "Invalid credentials" });
+    req.session.routeError = "Invalid credentials";
+    return res.redirect("/");
+
     }
 
     // Create session for the user

@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { users as usersCollection } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
+import { validateDOB, validateEmail, validateName, validateCounty, validateZipCode, validatePassword } from "../helpers.js";
+
 
 export async function createUser(userData) {
   if (!userData || typeof userData !== "object") {
@@ -19,50 +21,19 @@ export async function createUser(userData) {
 
   let userName = checkStr(userData.userName, "username");
   if (userName.length < 4) {
-    throw "Invalid username";
+    throw "Invalid username, it must be atleast 4 characters";
   }
 
-  let firstName = checkStr(userData.firstName, "first name");
-  let lastName = checkStr(userData.lastName, "last name");
-
-  let email = checkStr(userData.email, "email").toLowerCase();
-  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    throw "Invalid email";
-  }
-
-  let password = checkStr(userData.password, "password");
-
-  let pwFails =
-    password.length < 7 ||
-    !/[A-Z]/.test(password) ||
-    !/[0-9]/.test(password) ||
-    !/[!@#$%^&*()_\-+=<>?/[\]{}|~]/.test(password);
-
-  if (pwFails) {
-    throw "Invalid password";
-  }
+  let firstName = validateName(userData.firstName, "first name");
+  let lastName = validateName(userData.lastName, "last name");
+  let email = validateEmail(userData.email);
+  let password = validatePassword(userData.password);
   // console.log(userData);
-  let dob = checkStr(userData.dob, "date of birth");
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
-    throw "Invalid date of birth";
-  }
-  let parsed = new Date(dob);
-  if (isNaN(parsed.getTime())) {
-    throw "Invalid date of birth";
-  }
-
-  let today = new Date();
-  let isoToday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
-  if (parsed > isoToday) {
-    throw "Invalid date of birth";
-  }
+  let dob = validateDOB(userData.dob);
+  let county = validateCounty(userData.county);
+  let zipCode = validateZipCode(userData.zipCode);
 
   let users = await usersCollection();
-
   let existing = await users.findOne({
     $or: [{ email }, { userName }],
   });
@@ -80,8 +51,8 @@ export async function createUser(userData) {
     dob,
     role: "citizen",
     email,
-    county: userData.county || null,
-    zipCode: userData.zipCode || null,
+    county,
+    zipCode,
     preferredLanguage: userData.preferredLanguage || "en",
     twoFactorEnabled: false,
     passwordHash,
@@ -111,47 +82,19 @@ export async function createAdmin(userData) {
 
   let userName = checkStr(userData.userName, "username");
   if (userName.length < 4) {
-    throw "Invalid username";
+    throw "Invalid username, it must be atleast 4 characters";
   }
 
-  let firstName = checkStr(userData.firstName, "first name");
-  let lastName = checkStr(userData.lastName, "last name");
+ let firstName = validateName(userData.firstName, "first name");
+ let lastName = validateName(userData.lastName, "last name");
+ let email = validateEmail(userData.email);
+ let password = validatePassword(userData.password);
 
-  let email = checkStr(userData.email, "email").toLowerCase();
-  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    throw "Invalid email";
-  }
-
-  let password = checkStr(userData.password, "password");
-
-  let pwFails =
-    password.length < 7 ||
-    !/[A-Z]/.test(password) ||
-    !/[0-9]/.test(password) ||
-    !/[!@#$%^&*()_\-+=<>?/[\]{}|~]/.test(password);
-
-  if (pwFails) {
-    throw "Invalid password";
-  }
   // console.log(userData);
-  let dob = checkStr(userData.dob, "date of birth");
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
-    throw "Invalid date of birth";
-  }
-  let parsed = new Date(dob);
-  if (isNaN(parsed.getTime())) {
-    throw "Invalid date of birth";
-  }
+  let dob = validateDOB(userData.dob);
+  let county = validateCounty(userData.county);
+  let zipCode = validateZipCode(userData.zipCode);
 
-  let today = new Date();
-  let isoToday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
-  if (parsed > isoToday) {
-    throw "Invalid date of birth";
-  }
 
   let users = await usersCollection();
 
@@ -172,8 +115,8 @@ export async function createAdmin(userData) {
     dob,
     role: "admin",
     email,
-    county: userData.county || null,
-    zipCode: userData.zipCode || null,
+    county,
+    zipCode,
     preferredLanguage: userData.preferredLanguage || "en",
     twoFactorEnabled: false,
     passwordHash,
@@ -281,41 +224,20 @@ export async function editUser(userData) {
   };
 
   let userName = checkStr(userData.userName, "username");
-  if (userName.length < 4) throw "Invalid username";
+  if (userName.length < 4) throw "Invalid username, it must be atleast 4 characters";
 
-  let firstName = checkStr(userData.firstName, "first name");
-  let lastName = checkStr(userData.lastName, "last name");
+  let firstName = validateName(userData.firstName, "first name");
+  let lastName = validateName(userData.lastName, "last name");
 
-  let email = checkStr(userData.email, "email").toLowerCase();
-  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    throw "Invalid email";
-  }
 
-  let password = checkStr(userData.password, "password");
+  let email = validateEmail(userData.email);
 
-  let pwFails =
-    password.length < 7 ||
-    !/[A-Z]/.test(password) ||
-    !/[0-9]/.test(password) ||
-    !/[!@#$%^&*()_\-+=<>?/[\]{}|~]/.test(password);
 
-  if (pwFails) throw "Invalid password";
-  let dob = checkStr(userData.dob, "date of birth");
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
-    throw "Invalid date of birth";
-  }
+  let password = validatePassword(userData.password);
+  let dob = validateDOB(userData.dob);
+  let county = validateCounty(userData.county);
+  let zipCode = validateZipCode(userData.zipCode);
 
-  let parsed = new Date(dob);
-  if (isNaN(parsed.getTime())) throw "Invalid date of birth";
-
-  let today = new Date();
-  let isoToday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
-
-  if (parsed > isoToday) throw "Invalid date of birth";
 
   let passwordHash = await bcrypt.hash(password, 12);
 
@@ -326,8 +248,8 @@ export async function editUser(userData) {
     dob,
     role: userData.role || "citizen",
     email,
-    county: userData.county || null,
-    zipCode: userData.zipCode || null,
+    county,
+    zipCode,
     preferredLanguage: userData.preferredLanguage || "en",
     twoFactorEnabled: userData.twoFactorEnabled || false,
     passwordHash,

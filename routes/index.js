@@ -24,7 +24,7 @@ const constructorMethod = (app) => {
   });
 
   app.get("/", (req, res) => {
-    const errorMessage = req.session.routeError;
+    const errorMessage = req.query.error ||req.session.routeError  || null;;
     req.session.routeError = null;
 
     res.render("home", {

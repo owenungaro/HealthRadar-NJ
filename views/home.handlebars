@@ -24,6 +24,12 @@
           {{routeError}}
         </div>
       {{/if}}
+
+      {{#if error}}
+    <div class="error-box">
+      {{error}}
+    </div>
+    {{/if}}
       <div class="login-container">
         {{#if user}}
           <h2>{{translateText "Welcome,"}} {{user.userName}}!</h2>
@@ -38,6 +44,17 @@
             </form>
           </div>
         {{else}}
+
+        
+          {{#if hasErrors}}
+            <div class="error-box">
+              <ul>
+                {{#each errors}}
+                  <li>{{this}}</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
           <form action="/auth/login" method="POST" class="login-form">
             <h2>{{translateText "Sign In"}}</h2>
             <input
