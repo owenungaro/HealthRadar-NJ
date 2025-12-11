@@ -205,7 +205,16 @@ export async function updateHospital(
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) throw "Invalid email format.";
 
-  const expires = new Date(licenseExpires);
+  let expires;
+  if (licenseExpires instanceof Date) {
+    expires = licenseExpires;
+  } else if (typeof licenseExpires === 'string' && licenseExpires.includes('-')) {
+    const [year, month, day] = licenseExpires.split('-');
+    expires = new Date(Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)));
+  } else {
+    expires = new Date(licenseExpires);
+  }
+  
   if (isNaN(expires.getTime())) throw "Invalid licenseExpires date";
 
   if (typeof isActive !== "boolean")
@@ -230,7 +239,7 @@ export async function updateHospital(
     county,
     telephone,
     email,
-    licenseExpires: new Date(licenseExpires),
+    licenseExpires: typeof licenseExpires === 'string' ? licenseExpires : expires,
     adminName,
     licensedOwner,
     latitude,
