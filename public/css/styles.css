@@ -478,7 +478,7 @@ footer {
 }
 
 .status-active {
-  color: green;
+  color: #008000;
   font-weight: bold;
 }
 
@@ -840,4 +840,38 @@ footer {
   border-radius: 8px;
   text-align: left;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 6px;
+}
+
+.star-rating .star {
+  font-size: 26px;
+  color: #e2e8f0;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.star-rating .star.full {
+  color: #f6ad55;
+}
+
+.star-rating .star.half::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #f6ad55;
+}
+
+.star-rating-value {
+  font-size: 0.9rem;
+  color: #4a5568;
 }
