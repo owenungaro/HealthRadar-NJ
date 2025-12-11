@@ -4,8 +4,11 @@ import emergencyRoutes from "./emergency.js";
 import analyticsRoutes from "./analytics.js";
 import reviewsRoutes from "./reviews.js";
 import i18next from "../app.js";
+import mapRoutes from "./map.js";
+
 
 const constructorMethod = (app) => {
+  app.use("/map", mapRoutes);
   app.use("/auth", authRoutes);
   app.use("/facilities", facilitiesRoutes);
   app.use("/emergency", emergencyRoutes);

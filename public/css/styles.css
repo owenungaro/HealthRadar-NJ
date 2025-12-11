@@ -880,3 +880,65 @@ footer {
 .editHospital-container {
   margin-bottom: 20px;
 }
+
+#map {
+  height: 85vh;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  position: relative;
+  z-index: 10;
+  background: white;
+}
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+  position: relative;
+  margin-bottom: 20px;        
+  padding: 15px 0;            
+  gap: 20px;
+}
+
+.map-header h1 {
+  margin: 0;
+  margin-right: 30px;         
+  flex-grow: 1;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px;                  
+  align-items: center;
+}
+
+.back-to-dashboard-button,
+.logout-button {
+  padding: 12px 24px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.back-to-dashboard-button {
+  background-color: #007bff;
+}
+
+.back-to-dashboard-button:hover {
+  background-color: #0056b3;
+}
+
+.logout-button {
+  background-color: #dc3545;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}

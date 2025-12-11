@@ -16,6 +16,7 @@ import { createAdmin } from "./data/users.js";
 import "./helpers.js"; 
 
 import i18next from "i18next";
+import mapRoutes from "./routes/map.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -140,7 +141,7 @@ function translateText(text) {
 const hbs = exphbs.create({
   defaultLayout: "main",
   layoutsDir: path.join(__dirname, "views/layouts"),
-  helpers: { translateText },
+  helpers: { translateText,json: (data) => JSON.stringify(data) },
 });
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
