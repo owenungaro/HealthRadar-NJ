@@ -73,6 +73,7 @@ body::before {
   position: relative;
   animation: fadeInUp 0.6s ease;
   text-align: center;
+  margin: 0 auto;
 }
 
 @keyframes fadeInUp {
@@ -410,7 +411,7 @@ footer {
   padding: 10px 14px;
   border-radius: 10px;
   border: 2px solid #e2e8f0;
-  background: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
   transition: all 0.25s ease;
   font-size: 14px;
 }
@@ -881,4 +882,8 @@ footer {
 .star-rating-value {
   font-size: 0.9rem;
   color: #000000;
+}
+
+.editHospital-container {
+  margin-bottom: 20px;
 }
