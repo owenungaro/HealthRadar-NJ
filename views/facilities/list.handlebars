@@ -2,8 +2,8 @@
   <h1>{{translateText "Welcome to Facilities"}}</h1>
   {{#if user}}
     <div class="facilities-actions">
-      <a href="/dashboard" class="dashboard-link">
-        <button class="back-to-dashboard-button">{{translateText "Back to Dashboard"}}</button>
+      <a href="/dashboard" class="back-to-dashboard-button">
+    {{translateText "Back to Dashboard"}}
       </a>
 
       <form action="/auth/logout" method="POST" class="logout-form">
@@ -19,15 +19,15 @@
 <form id="facility-filters" class="facility-filters">
   <label>
     {{translateText "County"}}:
-    <input type="text" name="county" id="county" value="{{filters.county}}" />
+    <input type="text" name="county" id="county" value="{{filters.county}}" >
   </label>
   <label>
     {{translateText "City"}}:
-    <input type="text" name="city" id="city" value="{{filters.city}}" />
+    <input type="text" name="city" id="city" value="{{filters.city}}" >
   </label>
   <label>
     {{translateText "Type"}}:
-    <input type="text" name="facilityType" id="facilityType" value="{{filters.facilityType}}" />
+    <input type="text" name="facilityType" id="facilityType" value="{{filters.facilityType}}" >
   </label>
   <label>
   {{translateText "License Status"}}:

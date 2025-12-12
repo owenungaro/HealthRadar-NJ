@@ -1,21 +1,9 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HealthRadar NJ</title>
-
-  </head>
-  <body>
-    {{!-- <p style="color:red; font-weight:bold; font-size:18px;">
-      DEBUG routeError: "{{routeError}}"
-    </p> --}}
-
     <div class="logo-container">
       <img
         src="/public/images/healthradar_logo.svg"
         alt="HealthRadar Logo"
         class="logo"
-      />
+      >
     </div>
 
     <div class="login-bg">
@@ -49,11 +37,13 @@
         
           {{#if hasErrors}}
             <div class="error-box">
-              <ul>
-                {{#each errors}}
-                  <li>{{this}}</li>
-                {{/each}}
-              </ul>
+          <ul>
+          <template>
+            {{#each errors}}
+              <li>{{this}}</li>
+            {{/each}}
+          </template>
+        </ul>
             </div>
           {{/if}}
           <form action="/auth/login" method="POST" class="login-form">
@@ -63,13 +53,13 @@
               name="identifier"
               placeholder="Username or Email"
               required
-            />
+            >
             <input
               type="password"
               name="password"
               placeholder="Password"
               required
-            />
+            >
             <button type="submit">{{translateText "Sign In"}}</button>
           </form>
           <div class="extra-links">
@@ -78,5 +68,4 @@
         {{/if}}
       </div>
     </div>
-  </body>
-</html>
+  
