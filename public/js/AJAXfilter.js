@@ -2,16 +2,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const filterForm = document.getElementById("facility-filters");
   const resetButton = document.getElementById("reset-filters");
   const facilityListContainer = document.getElementById("facility-list-container");
-  
-  // Get input fields for live filtering
   const countyInput = document.getElementById("county");
   const cityInput = document.getElementById("city");
   const facilityTypeInput = document.getElementById("facilityType");
   const isActiveSelect = document.getElementById("isActive");
   
   let debounceTimer;
-
-  // Function to fetch facilities
   function fetchFacilities() {
     const county = countyInput.value;
     const city = cityInput.value;
@@ -54,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((err) => console.error("Error fetching data:", err));
   }
 
-  // Debounced function for live filtering (waits 500ms after typing stops)
   function debouncedFetch() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
@@ -62,27 +57,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 500);
   }
 
-  // Add live filtering on input events
   countyInput.addEventListener('input', debouncedFetch);
   cityInput.addEventListener('input', debouncedFetch);
   facilityTypeInput.addEventListener('input', debouncedFetch);
   isActiveSelect.addEventListener('change', fetchFacilities); // Immediate filter on dropdown change
-
-  // Handle Filter Form Submission (keep original behavior)
   filterForm.addEventListener("submit", function (e) {
     e.preventDefault(); 
     fetchFacilities();
   });
 
-  // Reset Button
+
   resetButton.addEventListener('click', function() {
-    // Reset form inputs
     countyInput.value = '';
     cityInput.value = '';
     facilityTypeInput.value = '';
     isActiveSelect.value = ''; // Reset dropdown to "All"
 
-    // Fetch all facilities
+    
     fetchFacilities();
   });
   fetchFacilities();

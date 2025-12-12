@@ -11,7 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   background: url("/public/images/background.jpg") no-repeat center center fixed;
-  background-size: cover; /* Ensures the image covers the whole page */
+  background-size: cover; 
   position: relative;
   color: #333;
   margin-left: 5px;
@@ -38,7 +38,6 @@ body::before {
   pointer-events: none;
 }
 
-/* Logo Container - Top Right */
 .logo-container {
   position: absolute;
   top: 20px;
@@ -57,7 +56,6 @@ body::before {
   transform: scale(1.05);
 }
 
-/* Background for the login */
 .login-bg {
   flex: 1;
   display: flex;
@@ -103,7 +101,6 @@ h2 {
   font-weight: 700;
 }
 
-/* Form Styling */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -186,7 +183,6 @@ h2 {
   margin-top: 10px;
 }
 
-/* Extra Links */
 .extra-links {
   margin-top: 25px;
   text-align: center;
@@ -205,7 +201,6 @@ h2 {
   text-decoration: underline;
 }
 
-/* Logout Button Styling */
 .logout-button,
 .back-to-dashboard-button {
   padding: 16px;
@@ -226,7 +221,6 @@ h2 {
   box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
 }
 
-/* Footer Styling */
 footer {
   color: white;
   text-align: center;
@@ -257,14 +251,12 @@ footer {
   box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
 }
 
-/* Dashboard Container */
 .dashboard-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 60px 40px;
 }
 
-/* Feature Buttons Grid */
 .feature-buttons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -318,7 +310,6 @@ footer {
   margin: 0;
 }
 
-/* Dashboard Header */
 .dashboard-header,
 .facilities-header {
   background: rgba(255, 255, 255, 0.95);
@@ -491,11 +482,10 @@ footer {
 .facilities-actions {
   display: flex;
   flex-direction: row;
-  align-items: middle; /* Vertically center items */
+  align-items: middle; 
   gap: 12px;
 }
 
-/* SIGNUP PAGE STYLING */
 .signup-container {
   max-width: 500px !important;
   padding: 40px 45px;

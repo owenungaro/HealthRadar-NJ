@@ -28,7 +28,6 @@ export async function createUser(userData) {
   let lastName = validateName(userData.lastName, "last name");
   let email = validateEmail(userData.email);
   let password = validatePassword(userData.password);
-  // console.log(userData);
   let dob = validateDOB(userData.dob);
   let county = validateCounty(userData.county);
   let zipCode = validateZipCode(userData.zipCode);
@@ -89,8 +88,6 @@ export async function createAdmin(userData) {
  let lastName = validateName(userData.lastName, "last name");
  let email = validateEmail(userData.email);
  let password = validatePassword(userData.password);
-
-  // console.log(userData);
   let dob = validateDOB(userData.dob);
   let county = validateCounty(userData.county);
   let zipCode = validateZipCode(userData.zipCode);
@@ -139,7 +136,6 @@ export async function findUserByEmailOrUsername(identifier) {
 
   let query = [];
   if (trimmed.includes("@")) {
-    //treat as email
     let email = trimmed.toLowerCase();
     let validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -148,7 +144,6 @@ export async function findUserByEmailOrUsername(identifier) {
     }
     query = { email };
   } else {
-    //treat as username
     if (trimmed.length < 4) {
       throw "Invalid identifier";
     }
@@ -158,9 +153,6 @@ export async function findUserByEmailOrUsername(identifier) {
   let users = await usersCollection();
   let user = await users.findOne(query);
 
-  // if (!user) {
-  //   throw "User not found";
-  // }
   return user;
 }
 
@@ -171,10 +163,6 @@ export async function findUserById(id) {
 
   let users = await usersCollection();
   let user = await users.findOne({ _id: new ObjectId(id) });
-
-  // if (!user) {
-  //   throw "User not found";
-  // }
   return user;
 }
 

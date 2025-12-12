@@ -16,7 +16,6 @@
   <img src="/public/images/healthradar_logo.svg" alt="HealthRadar Logo" class="logo">
 </div>
 
-<!-- Filters Form -->
 <form id="facility-filters" class="facility-filters">
   <label>
     {{translateText "County"}}:
@@ -33,7 +32,7 @@
   <label>
   {{translateText "License Status"}}:
   <select name="isActive" id="isActive">
-    <option value="">{{translateText "All"}}</option> <!-- When "All" is selected, it should be empty -->
+    <option value="">{{translateText "All"}}</option> 
     <option value="true" {{#if filters.isActive}}{{#if (eq filters.isActive 'true')}} {{translateText "selected"}} {{/if}}{{/if}}>{{translateText "Active"}}</option>
     <option value="false" {{#if filters.isActive}}{{#if (eq filters.isActive 'false')}} {{translateText "selected"}} {{/if}}{{/if}}>{{translateText "Inactive"}}</option>
   </select>

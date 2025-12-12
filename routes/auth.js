@@ -1,16 +1,16 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import { usersData } from "../data/index.js"; // Assuming you have user data functionality
+import { usersData } from "../data/index.js"; 
 import { sanitizeString } from "../helpers.js";
 
 const router = Router();
 
-// Route for sign up
+// Signup Route
 router.get("/signup", (req, res) => {
   res.render("signup", { title: "Sign Up" });
 });
 
-// Route for sign up
+
 router.post("/signup", async (req, res) => {
   try {
     let {
@@ -79,7 +79,7 @@ router.post("/signup", async (req, res) => {
 
 
 
-    // Create new user
+    // New User Creation
     const user = await usersData.createUser({
       userName,
       firstName,
@@ -92,7 +92,6 @@ router.post("/signup", async (req, res) => {
       password: password,
     });
 
-    // Create session for the user
     req.session.user = {
       _id: user._id,
       userName: user.userName,
@@ -110,7 +109,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Route for login (POST)
+// Route for login 
 router.post("/login", async (req, res) => {
   try {
     let { identifier, password } = req.body;
@@ -129,7 +128,6 @@ router.post("/login", async (req, res) => {
     return res.redirect("/");
   }
 
-    // Find user by email or username
     const user = await usersData.findUserByEmailOrUsername(identifier);
     if (!user) {
     req.session.routeError = "missing credentials";
@@ -137,7 +135,6 @@ router.post("/login", async (req, res) => {
 
     }
 
-    // Check password
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) {
     req.session.routeError = "Invalid credentials";
@@ -145,7 +142,7 @@ router.post("/login", async (req, res) => {
 
     }
 
-    // Create session for the user
+    // session for the user
     req.session.regenerate((err) => {
       if (err) {
         console.error(err);
@@ -161,8 +158,7 @@ router.post("/login", async (req, res) => {
         role: user.role
       };
 
-      // Redirect to dashboard after successful login
-      res.redirect("/dashboard");
+      res.redirect("/dashboard"); // Redirect to dashboard after login
     });
   } catch (err) {
   console.error(err);
@@ -178,7 +174,7 @@ router.post("/logout", (req, res) => {
       console.error("Error during session destruction", err);
       return res.status(500).json({ error: "Failed to log out" });
     }
-    res.redirect("/"); // Redirect to home page after successful logout
+    res.redirect("/"); // Redirect to home page after logout
   });
 });
 
