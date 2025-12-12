@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { users as usersCollection } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
-import { validateDOB, validateEmail, validateName, validateCounty, validateZipCode, validatePassword } from "../helpers.js";
+import { validateDOB, validateEmail, validateName, validateCounty, validateZipCode, validatePassword, validateUsername  } from "../helpers.js";
 
 
 export async function createUser(userData) {
@@ -19,10 +19,7 @@ export async function createUser(userData) {
     return trimmed;
   };
 
-  let userName = checkStr(userData.userName, "username");
-  if (userName.length < 4) {
-    throw "Invalid username, it must be atleast 4 characters";
-  }
+  let userName = validateUsername(userData.userName);
 
   let firstName = validateName(userData.firstName, "first name");
   let lastName = validateName(userData.lastName, "last name");
@@ -82,10 +79,7 @@ export async function createAdmin(userData) {
     return trimmed;
   };
 
-  let userName = checkStr(userData.userName, "username");
-  if (userName.length < 4) {
-    throw "Invalid username, it must be atleast 4 characters";
-  }
+  let userName = validateUsername(userData.userName);
 
  let firstName = validateName(userData.firstName, "first name");
  let lastName = validateName(userData.lastName, "last name");
@@ -219,16 +213,11 @@ export async function editUser(userData) {
     return trimmed;
   };
 
-  let userName = checkStr(userData.userName, "username");
-  if (userName.length < 4) throw "Invalid username, it must be atleast 4 characters";
+  let userName = validateUsername(userData.userName);
 
   let firstName = validateName(userData.firstName, "first name");
   let lastName = validateName(userData.lastName, "last name");
-
-
   let email = validateEmail(userData.email);
-
-
   let password = validatePassword(userData.password);
   let dob = validateDOB(userData.dob);
   let county = validateCounty(userData.county);

@@ -93,7 +93,7 @@ export function validateDOB(dob) {
 
 export function validateEmail(email) {
   if (typeof email !== "string") throw "Invalid email";
-  email = xss(email.trim().toLowerCase());
+  email = email.trim().toLowerCase();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     throw "Invalid email format";
@@ -116,8 +116,7 @@ export function validateName(name, fieldName = "name") {
   if (typeof name !== "string") {
     throw `${fieldName} must be a string`;
   }
-
-  let trimmed = xss(name.trim());
+  let trimmed = name.trim();
   if (trimmed.length === 0) {
     throw `${fieldName} cannot be empty`;
   }
@@ -132,7 +131,7 @@ export function validateCounty(county) {
   if (typeof county !== "string") {
     throw "County must be a string";
   }
-  let trimmed = xss(county.trim());
+  let trimmed = county.trim();
   if (trimmed.length === 0) {
     throw "County cannot be empty";
   }
@@ -145,7 +144,7 @@ export function validateCounty(county) {
 
 export function validateZipCode(zip) {
   if (!zip) throw "Zip code is required";
-  zip = xss(zip.toString().trim());
+  zip = zip.toString().trim();
   if (!/^\d{5}$/.test(zip)) {
     throw "Zip code must be a 5-digit number";
   }
@@ -156,7 +155,7 @@ export function validatePassword(password) {
   if (!password || typeof password !== "string") {
     throw "Password must be a string";
   }
-  password = xss(password.trim());
+  password = password.trim();
   if (password.length < 8) {
     throw "Password must be at least 8 characters long";
   }
@@ -170,4 +169,21 @@ export function validatePassword(password) {
     throw "Password must contain at least one special character";
   }
   return password;
+}
+
+
+export function validateUsername(userName) {
+  if (typeof userName !== "string") throw "Invalid username";
+  userName = userName.trim();
+  if (userName.length < 4) {
+    throw "Username must be at least 4 characters long";
+  }
+  const usernameRegex = /^[A-Za-z0-9_.@-]+$/;
+  if (!usernameRegex.test(userName)) {
+    throw "Username can only contain letters, numbers, specialCharacter(_,.,-,@)"
+  }
+  if (!/^[A-Za-z]/.test(userName)) {
+    throw "Username must start with a letter";
+  }
+  return userName;
 }
