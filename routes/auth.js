@@ -65,6 +65,8 @@ router.post("/signup", async (req, res) => {
     zipCode = sanitizeString(zipCode);
     preferredLanguage = sanitizeString(preferredLanguage);
     dob = sanitizeString(dob);
+    password = sanitizeString(password);
+    confirmPassword = sanitizeString(confirmPassword); 
 
     const existingUser = await usersData.findUserByEmailOrUsername(email);
     if (existingUser) {
@@ -127,6 +129,13 @@ router.post("/login", async (req, res) => {
     req.session.routeError = "Invalid username or email format";
     return res.redirect("/");
   }
+
+    try {
+      password = sanitizeString(password);
+    } catch (e) {
+      req.session.routeError = "Invalid password format";
+      return res.redirect("/");
+    }
 
     const user = await usersData.findUserByEmailOrUsername(identifier);
     if (!user) {

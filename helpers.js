@@ -61,7 +61,7 @@ Handlebars.registerHelper("eq", function (a, b, options) {
 
 export function validateDOB(dob) {
   if (typeof dob !== "string") throw "Invalid date of birth";
-  dob = dob.trim();
+  dob = xss(dob.trim());
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
     throw "Invalid date format for DOB";
   }
@@ -93,7 +93,7 @@ export function validateDOB(dob) {
 
 export function validateEmail(email) {
   if (typeof email !== "string") throw "Invalid email";
-  email = email.trim().toLowerCase();
+  email = xss(email.trim().toLowerCase());
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     throw "Invalid email format";
@@ -117,7 +117,7 @@ export function validateName(name, fieldName = "name") {
     throw `${fieldName} must be a string`;
   }
 
-  let trimmed = name.trim();
+  let trimmed = xss(name.trim());
   if (trimmed.length === 0) {
     throw `${fieldName} cannot be empty`;
   }
@@ -132,7 +132,7 @@ export function validateCounty(county) {
   if (typeof county !== "string") {
     throw "County must be a string";
   }
-  let trimmed = county.trim();
+  let trimmed = xss(county.trim());
   if (trimmed.length === 0) {
     throw "County cannot be empty";
   }
@@ -145,7 +145,7 @@ export function validateCounty(county) {
 
 export function validateZipCode(zip) {
   if (!zip) throw "Zip code is required";
-  zip = zip.toString().trim();
+  zip = xss(zip.toString().trim());
   if (!/^\d{5}$/.test(zip)) {
     throw "Zip code must be a 5-digit number";
   }
@@ -156,7 +156,7 @@ export function validatePassword(password) {
   if (!password || typeof password !== "string") {
     throw "Password must be a string";
   }
-  password = password.trim();
+  password = xss(password.trim());
   if (password.length < 8) {
     throw "Password must be at least 8 characters long";
   }
