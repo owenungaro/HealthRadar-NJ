@@ -34,7 +34,10 @@ export async function createUser(userData) {
 
   let users = await usersCollection();
   let existing = await users.findOne({
-    $or: [{ email }, { userName }],
+    $or: [
+      { email: { $regex: `^${email}$`, $options: "i" } },
+      { userName: { $regex: `^${userName}$`, $options: "i" } }
+    ]
   });
 
   if (existing) {
@@ -151,7 +154,12 @@ export async function findUserByEmailOrUsername(identifier) {
   }
 
   let users = await usersCollection();
-  let user = await users.findOne(query);
+  const user = await users.findOne({
+    $or: [
+      { email: { $regex: `^${identifier}$`, $options: "i" }},
+      { userName: { $regex: `^${identifier}$`, $options: "i" }}
+    ]
+  });
 
   return user;
 }

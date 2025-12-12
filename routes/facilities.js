@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { hospitalsData, reviewsData } from "../data/index.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
+import { sanitizeString } from "../helpers.js";
 import { getReviewsByHospital } from "../data/reviews.js";
 
 const router = Router();
@@ -10,7 +11,6 @@ router.get("/", requireAuth, async (req, res) => {
   try {
     const { county, city, facility_type, isActive } = req.query;
 
-    // Build filters object exactly like old facilities route
     const filters = {
       county: county || undefined,
       city: city || undefined,
@@ -31,7 +31,7 @@ router.get("/", requireAuth, async (req, res) => {
       return res.json({ hospitals });
     }
 
-    // Render list (same structure as old facilities route)
+    // Render list 
     res.render("facilities/list", {
       title: "Hospitals - HealthRadar NJ",
       hospitals,
@@ -60,8 +60,11 @@ router
       const userId = req.session.user._id;
       const { reviewText, rating } = req.body;
 
+      //Sanitizing and creating review.
+      const cleanedReviewText = sanitizeString(reviewText);
+
       await reviewsData.createReview(
-        reviewText,
+        cleanedReviewText,
         Number(rating),
         userId,
         hospitalId
@@ -70,8 +73,6 @@ router
       // redirect back to the facility detail page
       return res.redirect(`/facilities/${hospitalId}`);
     } catch (err) {
-      // console.error(err);
-
       const hospitalId = req.params.id;
       const hospital = await hospitalsData.getFacilityById(hospitalId);
       const reviews = await reviewsData.getReviewsByHospital(hospitalId);
@@ -148,10 +149,18 @@ router.post("/:id/edit", requireAuth, async (req, res) => {
 
     const updatedData = req.body;
 
+  //Sanitizing/XSS for admin dashboard
+  for (const key in updatedData) {
+    if (typeof updatedData[key] === "string") {
+      updatedData[key] = sanitizeString(updatedData[key]);
+    }
+  }
+
     delete updatedData.adminUserName;
     updatedData.isActive = updatedData.isActive === "true";
     updatedData.latitude = Number(updatedData.latitude);
     updatedData.longitude = Number(updatedData.longitude);
+    
     await hospitalsData.updateHospital(
       req.params.id,
       updatedData.facility_type,
@@ -202,7 +211,7 @@ router.post("/:id/delete", requireAuth, async (req, res) => {
     }
 
     await hospitalsData.deleteHospital(req.params.id);
-    return res.redirect("/facilities"); // redirect back to list
+    return res.redirect("/facilities"); 
   } catch (err) {
     console.error(err);
     return res.status(500).render("error", { title: "Error", error: err });
