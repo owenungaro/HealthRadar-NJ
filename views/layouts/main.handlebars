@@ -23,13 +23,14 @@
     </header>
     <main>
       {{{body}}}
-      <button class="accessibilityButton" id="contrastToggle">{{translateText
-          "High Contrast Mode"
-        }}</button>
-      <form action="/language" method="GET">
-        <button type="submit" class="accessibilityButton">Switch to
-          Spanish/Cambiar al Ingl&eacute;s</button>
-      </form>
+      <div class="accessibility">
+        <button class="accessibilityButton" id="contrastToggle">
+          {{translateText "High Contrast Mode"}} </button>
+        <form action="/language" method="GET">
+          <button type="submit" class="accessibilityButton">Switch to
+            Spanish/Cambiar al Ingl&eacute;s</button>
+        </form>
+      </div>
     </main>
     <footer>
       <p class="footerthing">&copy; 2025 HealthRadar NJ. Developed by Group 27.</p>

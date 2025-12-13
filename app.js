@@ -60,9 +60,7 @@ i18next.init({
         "Email Address": "Dirección de Correo Electrónico",
         "County": "Condado",
         "Zip Code": "Código Postal",
-        "Preferred Language": "Idioma Preferido",
         "required": "requerido",
-        "-- Select Language --": "-- Seleccionar Idioma --",
         "Password": "Contraseña",
         "Confirm Password": "Confirmar contraseña",
         "Create Account": "Crear Cuenta",
@@ -125,7 +123,9 @@ i18next.init({
           "Licensed Facility Name": "Nombre de Instalación con Licencia",
           "License Number": "Número de Licencia",
           "Edit Facility": "Facilidad de Edición",
-          "Delete Facility": "Función de Eliminación"
+          "Delete Facility": "Función de Eliminación",
+          "Interactive Map": "Mapa interactivo",
+          "Interactive Facility Map": "Mapa interactivo de instalaciones"
       },
     },
   },
@@ -170,7 +170,6 @@ if (
     email: "admin@example.com",
     county: null,
     zipCode: null,
-    preferredLanguage: "en",
     password: "Admin123!",
   });
 
@@ -209,7 +208,7 @@ app.get("/dashboard", requireAuth, (req, res) => {
   res.render("dashboard", {
     title: "HealthRadar NJ Dashboard",
     user: req.session.user,
-    language: "en",
+    language: "en"
   });
 });
 

@@ -21,7 +21,6 @@ router.post("/signup", async (req, res) => {
       password,
       confirmPassword,
       county,
-      preferredLanguage,
       zipCode,
       dob,
     } = req.body;
@@ -35,7 +34,6 @@ router.post("/signup", async (req, res) => {
       !password ||
       !confirmPassword ||
       !county ||
-      !preferredLanguage ||
       !zipCode ||
       !dob
     ) {
@@ -63,7 +61,6 @@ router.post("/signup", async (req, res) => {
     email = sanitizeString(email);
     county = sanitizeString(county);
     zipCode = sanitizeString(zipCode);
-    preferredLanguage = sanitizeString(preferredLanguage);
     dob = sanitizeString(dob);
     password = sanitizeString(password);
     confirmPassword = sanitizeString(confirmPassword); 
@@ -90,14 +87,13 @@ router.post("/signup", async (req, res) => {
       dob,
       county,
       zipCode,
-      preferredLanguage,
       password: password,
     });
 
     req.session.user = {
       _id: user._id,
       userName: user.userName,
-      email: user.email,
+      email: user.email
     };
 
     res.redirect("/dashboard"); // Redirect to the dashboard after successful signup
