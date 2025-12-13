@@ -38,40 +38,12 @@
   </select>
 </label>
   
-  <button type="submit">{{translateText "Filter"}}</button>
-  
   <button type="button" id="reset-filters">
     {{translateText "Reset Filters"}}
   </button>
 </form>
 
-<div id="facility-list-container">
-  {{#if facilities.length}}
-    <section class="facility-grid"> 
-      {{#each facilities}}
-        <div class="facility-card">
-          <h3 class="facility-name">
-            <a href="/facilities/{{this._id}}">{{this.licensedFacilityName}}</a>
-          </h3>
-          <p><strong>{{translateText "Type"}}:</strong> {{this.facilityType}}</p>
-          <p><strong>{{translateText "Address"}}:</strong> {{this.address}}, {{this.city}}, {{this.county}} {{translateText "County"}}</p>
-          <p><strong>{{translateText "Phone"}}:</strong> {{this.telephone}}</p>
-          <p><strong>{{translateText "Email"}}:</strong> <a href="mailto:{{this.email}}">{{this.email}}</a></p>
-          <p><strong>{{translateText "License Status"}}:</strong> 
-            {{#if this.isActive}} 
-              <span class="status-active">{{translateText "Active"}}</span>
-            {{else}} 
-              <span class="status-inactive">{{translateText "Inactive"}}</span>
-            {{/if}}
-          </p>
-          <p><strong>{{translateText "Average Rating"}}:</strong> {{this.averageRating}} ({{this.totalReviews}} {{translateText "reviews"}})</p>
-        </div>
-      {{/each}}
-    </section>
-  {{else}}
-    <p>{{translateText "No facilities found with these filters."}}</p>
-  {{/if}}
-</div>
+<div id="facility-list-container"></div>
 
 
 <script src="/public/js/AJAXfilter.js"></script>
