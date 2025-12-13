@@ -47,7 +47,7 @@
 
 <div id="facility-list-container">
   {{#if facilities.length}}
-    <div class="facility-grid">   {{!-- was facility-list --}}
+    <section class="facility-grid"> 
       {{#each facilities}}
         <div class="facility-card">
           <h3 class="facility-name">
@@ -67,7 +67,7 @@
           <p><strong>{{translateText "Average Rating"}}:</strong> {{this.averageRating}} ({{this.totalReviews}} {{translateText "reviews"}})</p>
         </div>
       {{/each}}
-    </div>
+    </section>
   {{else}}
     <p>{{translateText "No facilities found with these filters."}}</p>
   {{/if}}

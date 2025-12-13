@@ -361,6 +361,11 @@ footer {
 }
 
 /* Facilities Cards */
+
+#facility-list-container {
+  width: 100%;
+}
+
 .facility-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -623,7 +628,6 @@ footer {
   text-decoration: none;
   display: block;
   text-align: center;
-  margin: 0 auto;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
@@ -642,7 +646,7 @@ footer {
   padding: 18px;
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  height: 350px;
+  height: 700px;
   display: flex;
   flex-direction: column;
 }
@@ -931,4 +935,17 @@ footer {
 
 .logout-button:hover {
   background-color: #c82333;
+}
+
+.accessibility {
+  max-width: 500px;
+  margin: 10px auto 10px;
+  padding: 18px 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
 }
