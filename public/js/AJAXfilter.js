@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           facilityListContainer.innerHTML = `<div class="facility-list">${facilityListHtml}</div>`;
         } else {
-          facilityListContainer.innerHTML = "<p>No facilities found with these filters.</p>";
+          facilityListContainer.innerHTML = `<h2 class="noneFound">No facilities found with these filters.</h2>`;
         }
       })
       .catch((err) => console.error("Error fetching data:", err));

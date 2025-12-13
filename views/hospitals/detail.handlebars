@@ -1,8 +1,9 @@
 <div class="facilities-header">
-  <h2>{{facility.licensedFacilityName}}</h2>
+  <h2 class="facilityName">{{facility.licensedFacilityName}}</h2>
 
   {{#if user}}
     <div class="facilities-actions">
+      <p><a class="back-to-dashboard-button" href="/facilities">{{translateText "← Back to facility list"}}</a></p>
       <a href="/dashboard" class="back-to-dashboard-button">
       {{translateText "Back to Dashboard"}}
       </a>
@@ -83,7 +84,7 @@
 
 <hr />
 
-<h3>{{translateText "Reviews"}}</h3>
+<h2 class="reviewHeaderText">{{translateText "Reviews"}}</h2>
 
 <div class="reviews-section">
   {{#if reviewError}}
@@ -160,6 +161,3 @@
   {{/if}}
 
 </div>
-
-<br />
-<p><a href="/facilities">{{translateText "← Back to facility list"}}</a></p>
