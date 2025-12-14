@@ -168,8 +168,8 @@ if (
     dob: "1990-01-01",
     role: "admin",
     email: "admin@example.com",
-    county: null,
-    zipCode: null,
+    county: "somerset",
+    zipCode: "07924",
     password: "Admin123!",
   });
 
